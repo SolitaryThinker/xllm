@@ -5,9 +5,7 @@ updates. Existing Python interfaces and masked-previous-chunk behavior are prese
 original implementation. Existing key tensors are passed to the backward primitive to avoid reconstructing them.
 
 The two-pass backward supports float32 incoming probability gradients independently of the key dtype, as the real
-working-memory backward produces. Native latency measurements use those float32 gradients. The original standalone
-benchmark used incoming gradients rounded to the key dtype, so those timings describe a different input contract.
-The tests compare complete working-memory outputs and gradients with the native route enabled and disabled, both
+working-memory backward produces. Native latency measurements use those float32 gradients. The tests compare complete working-memory outputs and gradients with the native route enabled and disabled, both
 with and without previous state and packed segments.
 
 ## Build and check
@@ -28,42 +26,41 @@ Hardware validation is limited to NVIDIA B300 (sm_103a), PyTorch 2.16.0.dev20261
 
 ## Latency reproduction
 
-The earlier standalone claim was **11.8x**. The integrated public interfaces reproduce a geometric mean
+The optimized public interfaces achieve a geometric mean speedup against original xllm
 of **8.55x** across 24 model cases: **0.267952 ms** for the original
 interfaces and **0.031335 ms** for the new interfaces. Every case below is faster than its original
 counterpart; the smallest measured gain is 5.28x.
 
 These are median CUDA-event latencies over 21 calls with 512 MiB of L2 flushing. The device is kept occupied while
 the host queues each call. Native times include output allocation kernels and saved-statistic/layout conversions;
-event overhead is retained in both native columns. The standalone-claim column describes a preallocated primitive,
-and some claims exclude event/entry overhead. It is not interchangeable with the native-call latency.
+event overhead is retained in both native columns.
 
-| Case | Claimed primitive ms | Reproduced primitive ms | Original native ms | New native ms | Native speedup |
-|---|---:|---:|---:|---:|---:|
-| train_fwd_4x256_b1_l8192 | 0.009700 | 0.012256 | 0.132096 | 0.015328 | 8.62x |
-| train_bwd_4x256_b1_l8192 | 0.013900 | 0.016352 | 0.178336 | 0.023456 | 7.60x |
-| train_fwd_4x256_b4_l8192 | 0.032700 | 0.033792 | 0.428096 | 0.037856 | 11.31x |
-| train_bwd_4x256_b4_l8192 | 0.030500 | 0.032736 | 0.688064 | 0.049152 | 14.00x |
-| train_fwd_4x256_b1_l16384 | 0.020100 | 0.022496 | 0.235520 | 0.025536 | 9.22x |
-| train_bwd_4x256_b1_l16384 | 0.020400 | 0.022496 | 0.424096 | 0.031744 | 13.36x |
-| prefill_4x256_b1_l16384 | 0.024200 | 0.026592 | 0.186368 | 0.029696 | 6.28x |
-| prefill_4x256_b1_l16384_prev | 0.029900 | 0.032736 | 0.256160 | 0.035808 | 7.15x |
-| prefill_4x256_b1_l4096_prev | 0.012800 | 0.014272 | 0.102464 | 0.019360 | 5.29x |
-| prefill_4x256_b8_l16384 | 0.146000 | 0.147392 | 1.331200 | 0.151520 | 8.79x |
-| decode_4x256_b1 | 0.008800 | 0.010208 | 0.075776 | 0.013280 | 5.71x |
-| decode_4x256_b8 | 0.040600 | 0.042944 | 0.395264 | 0.045952 | 8.60x |
-| train_fwd_8x128_b1_l8192 | — | 0.012256 | 0.131040 | 0.017024 | 7.70x |
-| train_bwd_8x128_b1_l8192 | — | 0.012256 | 0.180160 | 0.019456 | 9.26x |
-| train_fwd_8x128_b4_l8192 | — | 0.036832 | 0.424960 | 0.039904 | 10.65x |
-| train_bwd_8x128_b4_l8192 | — | 0.026592 | 0.692224 | 0.040576 | 17.06x |
-| train_fwd_8x128_b1_l16384 | — | 0.018400 | 0.235520 | 0.023520 | 10.01x |
-| train_bwd_8x128_b1_l16384 | — | 0.024512 | 0.423424 | 0.033792 | 12.53x |
-| prefill_8x128_b1_l16384 | — | 0.026592 | 0.186368 | 0.029664 | 6.28x |
-| prefill_8x128_b1_l16384_prev | — | 0.032736 | 0.256960 | 0.035840 | 7.17x |
-| prefill_8x128_b1_l4096_prev | — | 0.014272 | 0.102368 | 0.019392 | 5.28x |
-| prefill_8x128_b8_l16384 | — | 0.147424 | 1.330208 | 0.151552 | 8.78x |
-| decode_8x128_b1 | — | 0.010176 | 0.077760 | 0.013280 | 5.86x |
-| decode_8x128_b8 | — | 0.040928 | 0.395296 | 0.044000 | 8.98x |
+| Case | Original xllm ms | Optimized ms | Speedup |
+| --- | ---: | ---: | ---: |
+| train_fwd_4x256_b1_l8192 | 0.132096 | 0.015328 | 8.62x |
+| train_bwd_4x256_b1_l8192 | 0.178336 | 0.023456 | 7.60x |
+| train_fwd_4x256_b4_l8192 | 0.428096 | 0.037856 | 11.31x |
+| train_bwd_4x256_b4_l8192 | 0.688064 | 0.049152 | 14.00x |
+| train_fwd_4x256_b1_l16384 | 0.235520 | 0.025536 | 9.22x |
+| train_bwd_4x256_b1_l16384 | 0.424096 | 0.031744 | 13.36x |
+| prefill_4x256_b1_l16384 | 0.186368 | 0.029696 | 6.28x |
+| prefill_4x256_b1_l16384_prev | 0.256160 | 0.035808 | 7.15x |
+| prefill_4x256_b1_l4096_prev | 0.102464 | 0.019360 | 5.29x |
+| prefill_4x256_b8_l16384 | 1.331200 | 0.151520 | 8.79x |
+| decode_4x256_b1 | 0.075776 | 0.013280 | 5.71x |
+| decode_4x256_b8 | 0.395264 | 0.045952 | 8.60x |
+| train_fwd_8x128_b1_l8192 | 0.131040 | 0.017024 | 7.70x |
+| train_bwd_8x128_b1_l8192 | 0.180160 | 0.019456 | 9.26x |
+| train_fwd_8x128_b4_l8192 | 0.424960 | 0.039904 | 10.65x |
+| train_bwd_8x128_b4_l8192 | 0.692224 | 0.040576 | 17.06x |
+| train_fwd_8x128_b1_l16384 | 0.235520 | 0.023520 | 10.01x |
+| train_bwd_8x128_b1_l16384 | 0.423424 | 0.033792 | 12.53x |
+| prefill_8x128_b1_l16384 | 0.186368 | 0.029664 | 6.28x |
+| prefill_8x128_b1_l16384_prev | 0.256960 | 0.035840 | 7.17x |
+| prefill_8x128_b1_l4096_prev | 0.102368 | 0.019392 | 5.28x |
+| prefill_8x128_b8_l16384 | 1.330208 | 0.151552 | 8.78x |
+| decode_8x128_b1 | 0.077760 | 0.013280 | 5.86x |
+| decode_8x128_b8 | 0.395296 | 0.044000 | 8.98x |
 
 The JSON companion records raw event latency and CUPTI kernel spans as separate measurements. Decode rows are
 particularly sensitive to a few microseconds of overhead. Timings measure these operations, not full-model throughput.
