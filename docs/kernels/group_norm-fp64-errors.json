@@ -1,0 +1,725 @@
+{
+  "family": "group_norm",
+  "reference": "independent FP64 math, unrounded outputs",
+  "baseline": "original xllm production implementation; deterministic dispatch selects original GN/TDN",
+  "results": [
+    {
+      "case": "rms-q64c64-fwd",
+      "outputs": {
+        "y": {
+          "baseline": {
+            "relative_l2": 0.0016578880229025823,
+            "max_absolute": 0.03102047435547206,
+            "elements": 1073741824
+          },
+          "optimized": {
+            "relative_l2": 0.0016578880229258044,
+            "max_absolute": 0.03102047435547206,
+            "elements": 1073741824
+          }
+        },
+        "rstd": {
+          "baseline": {
+            "relative_l2": 3.917145661668258e-08,
+            "max_absolute": 1.477503093205712e-07,
+            "elements": 16777216
+          },
+          "optimized": {
+            "relative_l2": 3.977974974850381e-08,
+            "max_absolute": 1.5114175577757294e-07,
+            "elements": 16777216
+          }
+        }
+      }
+    },
+    {
+      "case": "rms-q64c64-bwd",
+      "outputs": {
+        "dx": {
+          "baseline": {
+            "relative_l2": 0.0016589853942082053,
+            "max_absolute": 0.01562404245310045,
+            "elements": 1073741824
+          },
+          "optimized": {
+            "relative_l2": 0.001658985394192919,
+            "max_absolute": 0.01562404245310045,
+            "elements": 1073741824
+          }
+        },
+        "dgamma": {
+          "baseline": {
+            "relative_l2": 0.001640499202412947,
+            "max_absolute": 6.830216033151373,
+            "elements": 4096
+          },
+          "optimized": {
+            "relative_l2": 0.001640499124588419,
+            "max_absolute": 6.830216033151373,
+            "elements": 4096
+          }
+        }
+      }
+    },
+    {
+      "case": "rms-q64c128-fwd",
+      "outputs": {
+        "y": {
+          "baseline": {
+            "relative_l2": 0.0016582659700580748,
+            "max_absolute": 0.031063762606734713,
+            "elements": 536870912
+          },
+          "optimized": {
+            "relative_l2": 0.0016582659700956257,
+            "max_absolute": 0.031063762606734713,
+            "elements": 536870912
+          }
+        },
+        "rstd": {
+          "baseline": {
+            "relative_l2": 3.938988845786129e-08,
+            "max_absolute": 1.2481441247214065e-07,
+            "elements": 4194304
+          },
+          "optimized": {
+            "relative_l2": 4.19927173031709e-08,
+            "max_absolute": 1.3925149555671368e-07,
+            "elements": 4194304
+          }
+        }
+      }
+    },
+    {
+      "case": "rms-q64c128-bwd",
+      "outputs": {
+        "dx": {
+          "baseline": {
+            "relative_l2": 0.0016590324384652174,
+            "max_absolute": 0.015623374041958904,
+            "elements": 536870912
+          },
+          "optimized": {
+            "relative_l2": 0.0016590324384350619,
+            "max_absolute": 0.015623374041958904,
+            "elements": 536870912
+          }
+        },
+        "dgamma": {
+          "baseline": {
+            "relative_l2": 0.0016690735508761434,
+            "max_absolute": 3.6176168840563605,
+            "elements": 8192
+          },
+          "optimized": {
+            "relative_l2": 0.0016690735521597906,
+            "max_absolute": 3.6176168840563605,
+            "elements": 8192
+          }
+        }
+      }
+    },
+    {
+      "case": "ln-q64c128-fwd",
+      "outputs": {
+        "y": {
+          "baseline": {
+            "relative_l2": 0.0016582663752384107,
+            "max_absolute": 0.03124961121281089,
+            "elements": 536870912
+          },
+          "optimized": {
+            "relative_l2": 0.0016582663753368625,
+            "max_absolute": 0.03124961121281089,
+            "elements": 536870912
+          }
+        },
+        "mean": {
+          "baseline": {
+            "relative_l2": 4.964737911470825e-09,
+            "max_absolute": 3.4458935260772705e-08,
+            "elements": 4194304
+          },
+          "optimized": {
+            "relative_l2": 5.010134736085437e-09,
+            "max_absolute": 3.4458935260772705e-08,
+            "elements": 4194304
+          }
+        },
+        "rstd": {
+          "baseline": {
+            "relative_l2": 4.009170482998886e-08,
+            "max_absolute": 1.330939436439138e-07,
+            "elements": 4194304
+          },
+          "optimized": {
+            "relative_l2": 4.486667234217949e-08,
+            "max_absolute": 2.0396013467038898e-07,
+            "elements": 4194304
+          }
+        }
+      }
+    },
+    {
+      "case": "ln-q64c128-bwd",
+      "outputs": {
+        "dx": {
+          "baseline": {
+            "relative_l2": 0.0016589250089316333,
+            "max_absolute": 0.015622908285280346,
+            "elements": 536870912
+          },
+          "optimized": {
+            "relative_l2": 0.0016589250089420401,
+            "max_absolute": 0.015622908285280346,
+            "elements": 536870912
+          }
+        },
+        "dgamma": {
+          "baseline": {
+            "relative_l2": 0.001653253245937597,
+            "max_absolute": 3.7965506652251406,
+            "elements": 8192
+          },
+          "optimized": {
+            "relative_l2": 0.001653253199946023,
+            "max_absolute": 3.7965506652251406,
+            "elements": 8192
+          }
+        },
+        "dbeta": {
+          "baseline": {
+            "relative_l2": 0.0016622508004877589,
+            "max_absolute": 1.9982594847679138,
+            "elements": 8192
+          },
+          "optimized": {
+            "relative_l2": 0.0016622507980367273,
+            "max_absolute": 1.9982594847679138,
+            "elements": 8192
+          }
+        }
+      }
+    },
+    {
+      "case": "rms-o64c24-fwd",
+      "outputs": {
+        "y": {
+          "baseline": {
+            "relative_l2": 0.0016644213296977749,
+            "max_absolute": 0.015623445713470296,
+            "elements": 402653184
+          },
+          "optimized": {
+            "relative_l2": 0.0016644213296920763,
+            "max_absolute": 0.015623445713470296,
+            "elements": 402653184
+          }
+        },
+        "rstd": {
+          "baseline": {
+            "relative_l2": 4.071215311954593e-08,
+            "max_absolute": 2.5598096708989715e-07,
+            "elements": 16777216
+          },
+          "optimized": {
+            "relative_l2": 4.0731172701656574e-08,
+            "max_absolute": 2.5598096708989715e-07,
+            "elements": 16777216
+          }
+        }
+      }
+    },
+    {
+      "case": "rms-o64c24-bwd",
+      "outputs": {
+        "dx": {
+          "baseline": {
+            "relative_l2": 0.001657983488386203,
+            "max_absolute": 0.01562375547455197,
+            "elements": 402653184
+          },
+          "optimized": {
+            "relative_l2": 0.0016579834884426197,
+            "max_absolute": 0.01562375547455197,
+            "elements": 402653184
+          }
+        }
+      }
+    },
+    {
+      "case": "rms-o64c40-fwd",
+      "outputs": {
+        "y": {
+          "baseline": {
+            "relative_l2": 0.0016606954561608751,
+            "max_absolute": 0.015624537498821311,
+            "elements": 167772160
+          },
+          "optimized": {
+            "relative_l2": 0.0016606954562463974,
+            "max_absolute": 0.015624537498821311,
+            "elements": 167772160
+          }
+        },
+        "rstd": {
+          "baseline": {
+            "relative_l2": 4.005232555636978e-08,
+            "max_absolute": 1.8102537158171117e-07,
+            "elements": 4194304
+          },
+          "optimized": {
+            "relative_l2": 4.051495878386093e-08,
+            "max_absolute": 2.019470670688861e-07,
+            "elements": 4194304
+          }
+        }
+      }
+    },
+    {
+      "case": "rms-o64c40-bwd",
+      "outputs": {
+        "dx": {
+          "baseline": {
+            "relative_l2": 0.001657219572373672,
+            "max_absolute": 0.015595478915818362,
+            "elements": 167772160
+          },
+          "optimized": {
+            "relative_l2": 0.0016572195725124228,
+            "max_absolute": 0.015595478915818362,
+            "elements": 167772160
+          }
+        }
+      }
+    },
+    {
+      "case": "rms-o64c64-fwd",
+      "outputs": {
+        "y": {
+          "baseline": {
+            "relative_l2": 0.0016596962873768467,
+            "max_absolute": 0.015624788446052307,
+            "elements": 268435456
+          },
+          "optimized": {
+            "relative_l2": 0.0016596962874177996,
+            "max_absolute": 0.015624788446052307,
+            "elements": 268435456
+          }
+        },
+        "rstd": {
+          "baseline": {
+            "relative_l2": 3.9037015965339054e-08,
+            "max_absolute": 1.4212219601184017e-07,
+            "elements": 4194304
+          },
+          "optimized": {
+            "relative_l2": 3.966230915422719e-08,
+            "max_absolute": 1.534841855832525e-07,
+            "elements": 4194304
+          }
+        }
+      }
+    },
+    {
+      "case": "rms-o64c64-bwd",
+      "outputs": {
+        "dx": {
+          "baseline": {
+            "relative_l2": 0.001656913292317625,
+            "max_absolute": 0.01558803385354679,
+            "elements": 268435456
+          },
+          "optimized": {
+            "relative_l2": 0.0016569132924690048,
+            "max_absolute": 0.01558803385354679,
+            "elements": 268435456
+          }
+        }
+      }
+    },
+    {
+      "case": "rms-b1c1536-fwd",
+      "outputs": {
+        "y": {
+          "baseline": {
+            "relative_l2": 0.0016586615478296944,
+            "max_absolute": 0.03116746517214075,
+            "elements": 402653184
+          },
+          "optimized": {
+            "relative_l2": 0.0016586615476773352,
+            "max_absolute": 0.03116746517214075,
+            "elements": 402653184
+          }
+        },
+        "rstd": {
+          "baseline": {
+            "relative_l2": 4.5649882008208613e-08,
+            "max_absolute": 1.3022423694941665e-07,
+            "elements": 262144
+          },
+          "optimized": {
+            "relative_l2": 4.109826669893829e-08,
+            "max_absolute": 1.1805783006746395e-07,
+            "elements": 262144
+          }
+        }
+      }
+    },
+    {
+      "case": "rms-b1c1536-bwd",
+      "outputs": {
+        "dx": {
+          "baseline": {
+            "relative_l2": 0.0016592008653398028,
+            "max_absolute": 0.015625087635934953,
+            "elements": 402653184
+          },
+          "optimized": {
+            "relative_l2": 0.0016592008653130502,
+            "max_absolute": 0.015625087635934953,
+            "elements": 402653184
+          }
+        },
+        "dgamma": {
+          "baseline": {
+            "relative_l2": 0.001729910999817902,
+            "max_absolute": 3.931474544693174,
+            "elements": 1536
+          },
+          "optimized": {
+            "relative_l2": 0.0017299108472411699,
+            "max_absolute": 3.931474544693174,
+            "elements": 1536
+          }
+        }
+      }
+    },
+    {
+      "case": "rms-b2c1280-fwd",
+      "outputs": {
+        "y": {
+          "baseline": {
+            "relative_l2": 0.001658431488940451,
+            "max_absolute": 0.031169468178541493,
+            "elements": 167772160
+          },
+          "optimized": {
+            "relative_l2": 0.001658431488904198,
+            "max_absolute": 0.031169468178541493,
+            "elements": 167772160
+          }
+        },
+        "rstd": {
+          "baseline": {
+            "relative_l2": 4.3902641407525055e-08,
+            "max_absolute": 1.3344071692067416e-07,
+            "elements": 131072
+          },
+          "optimized": {
+            "relative_l2": 4.255306478239054e-08,
+            "max_absolute": 1.246871221827206e-07,
+            "elements": 131072
+          }
+        }
+      }
+    },
+    {
+      "case": "rms-b2c1280-bwd",
+      "outputs": {
+        "dx": {
+          "baseline": {
+            "relative_l2": 0.0016588122287693758,
+            "max_absolute": 0.015612656805184422,
+            "elements": 167772160
+          },
+          "optimized": {
+            "relative_l2": 0.0016588122287639162,
+            "max_absolute": 0.015612656805184422,
+            "elements": 167772160
+          }
+        },
+        "dgamma": {
+          "baseline": {
+            "relative_l2": 0.0016199284288666111,
+            "max_absolute": 3.8884642573907513,
+            "elements": 2560
+          },
+          "optimized": {
+            "relative_l2": 0.0016199284250776461,
+            "max_absolute": 3.8884642573907513,
+            "elements": 2560
+          }
+        }
+      }
+    },
+    {
+      "case": "rms-b4c1024-fwd",
+      "outputs": {
+        "y": {
+          "baseline": {
+            "relative_l2": 0.0016586837877780169,
+            "max_absolute": 0.031224496429045345,
+            "elements": 268435456
+          },
+          "optimized": {
+            "relative_l2": 0.0016586837877406884,
+            "max_absolute": 0.031224496429045345,
+            "elements": 268435456
+          }
+        },
+        "rstd": {
+          "baseline": {
+            "relative_l2": 4.073199641368867e-08,
+            "max_absolute": 1.2614426803114753e-07,
+            "elements": 262144
+          },
+          "optimized": {
+            "relative_l2": 4.1798282010844337e-08,
+            "max_absolute": 1.206060632474859e-07,
+            "elements": 262144
+          }
+        }
+      }
+    },
+    {
+      "case": "rms-b4c1024-bwd",
+      "outputs": {
+        "dx": {
+          "baseline": {
+            "relative_l2": 0.0016590355981617906,
+            "max_absolute": 0.015622981506647982,
+            "elements": 268435456
+          },
+          "optimized": {
+            "relative_l2": 0.0016590355981417342,
+            "max_absolute": 0.015622981506647982,
+            "elements": 268435456
+          }
+        },
+        "dgamma": {
+          "baseline": {
+            "relative_l2": 0.0016570966462626452,
+            "max_absolute": 3.8289847441656093,
+            "elements": 4096
+          },
+          "optimized": {
+            "relative_l2": 0.0016570966303324347,
+            "max_absolute": 3.8289847441656093,
+            "elements": 4096
+          }
+        }
+      }
+    },
+    {
+      "case": "rms-b1c4096-fwd",
+      "outputs": {
+        "y": {
+          "baseline": {
+            "relative_l2": 0.001658158682753954,
+            "max_absolute": 0.03123864474507343,
+            "elements": 268435456
+          },
+          "optimized": {
+            "relative_l2": 0.0016581586828042685,
+            "max_absolute": 0.03123864474507343,
+            "elements": 268435456
+          }
+        },
+        "rstd": {
+          "baseline": {
+            "relative_l2": 4.142945484175211e-08,
+            "max_absolute": 1.1330414628751839e-07,
+            "elements": 65536
+          },
+          "optimized": {
+            "relative_l2": 4.202274179811879e-08,
+            "max_absolute": 1.1486101192392795e-07,
+            "elements": 65536
+          }
+        }
+      }
+    },
+    {
+      "case": "rms-b1c4096-bwd",
+      "outputs": {
+        "dx": {
+          "baseline": {
+            "relative_l2": 0.0016591500315685534,
+            "max_absolute": 0.015622351528269185,
+            "elements": 268435456
+          },
+          "optimized": {
+            "relative_l2": 0.0016591500315871067,
+            "max_absolute": 0.015622351528269185,
+            "elements": 268435456
+          }
+        },
+        "dgamma": {
+          "baseline": {
+            "relative_l2": 0.001630903461942681,
+            "max_absolute": 3.9811688731124377,
+            "elements": 4096
+          },
+          "optimized": {
+            "relative_l2": 0.0016309036331216482,
+            "max_absolute": 3.9811688731124377,
+            "elements": 4096
+          }
+        }
+      }
+    },
+    {
+      "case": "rms-q32c128-fwd",
+      "outputs": {
+        "y": {
+          "baseline": {
+            "relative_l2": 0.00165835153250729,
+            "max_absolute": 0.031149553620315018,
+            "elements": 268435456
+          },
+          "optimized": {
+            "relative_l2": 0.00165835153253683,
+            "max_absolute": 0.031149553620315018,
+            "elements": 268435456
+          }
+        },
+        "rstd": {
+          "baseline": {
+            "relative_l2": 3.953089281264712e-08,
+            "max_absolute": 1.257140976873572e-07,
+            "elements": 2097152
+          },
+          "optimized": {
+            "relative_l2": 4.2115946317951976e-08,
+            "max_absolute": 1.3422708156074492e-07,
+            "elements": 2097152
+          }
+        }
+      }
+    },
+    {
+      "case": "rms-q32c128-bwd",
+      "outputs": {
+        "dx": {
+          "baseline": {
+            "relative_l2": 0.0016591911326019335,
+            "max_absolute": 0.015624537168187125,
+            "elements": 268435456
+          },
+          "optimized": {
+            "relative_l2": 0.001659191132636188,
+            "max_absolute": 0.015624537168187125,
+            "elements": 268435456
+          }
+        },
+        "dgamma": {
+          "baseline": {
+            "relative_l2": 0.0016873806162884448,
+            "max_absolute": 3.8401179275151662,
+            "elements": 4096
+          },
+          "optimized": {
+            "relative_l2": 0.0016873802836139635,
+            "max_absolute": 3.8401179275151662,
+            "elements": 4096
+          }
+        }
+      }
+    },
+    {
+      "case": "rms-k8c128-fwd",
+      "outputs": {
+        "y": {
+          "baseline": {
+            "relative_l2": 0.001659295345526787,
+            "max_absolute": 0.015625254376320008,
+            "elements": 67108864
+          },
+          "optimized": {
+            "relative_l2": 0.001659295345457868,
+            "max_absolute": 0.015625254376320008,
+            "elements": 67108864
+          }
+        },
+        "rstd": {
+          "baseline": {
+            "relative_l2": 3.9369610626995734e-08,
+            "max_absolute": 1.1212810357985603e-07,
+            "elements": 524288
+          },
+          "optimized": {
+            "relative_l2": 3.976431312349956e-08,
+            "max_absolute": 1.1291345591857294e-07,
+            "elements": 524288
+          }
+        }
+      }
+    },
+    {
+      "case": "rms-k8c128-bwd",
+      "outputs": {
+        "dx": {
+          "baseline": {
+            "relative_l2": 0.0016561745850555188,
+            "max_absolute": 0.015467593206034636,
+            "elements": 67108864
+          },
+          "optimized": {
+            "relative_l2": 0.0016561745852879928,
+            "max_absolute": 0.015467593206034636,
+            "elements": 67108864
+          }
+        }
+      }
+    },
+    {
+      "case": "rms-o32c80-fwd",
+      "outputs": {
+        "y": {
+          "baseline": {
+            "relative_l2": 0.0016594848887609211,
+            "max_absolute": 0.015625181028111612,
+            "elements": 167772160
+          },
+          "optimized": {
+            "relative_l2": 0.0016594848887529236,
+            "max_absolute": 0.015625181028111612,
+            "elements": 167772160
+          }
+        },
+        "rstd": {
+          "baseline": {
+            "relative_l2": 4.09603233563912e-08,
+            "max_absolute": 1.4249801250088012e-07,
+            "elements": 2097152
+          },
+          "optimized": {
+            "relative_l2": 4.1436789160986954e-08,
+            "max_absolute": 1.6884855669196952e-07,
+            "elements": 2097152
+          }
+        }
+      }
+    },
+    {
+      "case": "rms-o32c80-bwd",
+      "outputs": {
+        "dx": {
+          "baseline": {
+            "relative_l2": 0.0016566043982478222,
+            "max_absolute": 0.015454966460259456,
+            "elements": 167772160
+          },
+          "optimized": {
+            "relative_l2": 0.0016566043984060064,
+            "max_absolute": 0.015454966460259456,
+            "elements": 167772160
+          }
+        }
+      }
+    }
+  ]
+}

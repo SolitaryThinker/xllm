@@ -137,3 +137,25 @@ normalization, or AWM softmax. Hardware coverage remains B300 (sm_103a).
 
 See [Gekko training comparison](gekko-training.md) for all four kernel families
 trained together with nonzero AWM gradients and same-binary repeat controls.
+
+## Original and optimized errors against unrounded FP64 math
+
+The table reports the largest tensor relative L2 error across the model cases for
+each output: `norm(actual - reference) / norm(reference)`. Both implementations
+use identical inputs and are measured against independent, unrounded FP64 math.
+These errors include output rounding; the earlier numerical-agreement table uses
+a reference rounded to the output dtype and therefore measures a different error.
+Input quantization and RoPE angle-table generation are outside this comparison.
+Backward comparisons use each operation's specified inputs and saved statistics.
+
+| Output | Original relative L2 error (%) | Optimized relative L2 error (%) |
+|---|---:|---:|
+| y | 0.16644213 | 0.16644213 |
+| rstd | 4.5649882e-06 | 4.4866672e-06 |
+| dx | 0.16592009 | 0.16592009 |
+| dgamma | 0.1729911 | 0.17299108 |
+| mean | 4.9647379e-07 | 5.0101347e-07 |
+| dbeta | 0.16622508 | 0.16622508 |
+
+Per-case outputs, maximum absolute errors, and relative L2 errors are recorded in
+[group_norm-fp64-errors.json](group_norm-fp64-errors.json).
