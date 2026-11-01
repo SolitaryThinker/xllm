@@ -83,3 +83,43 @@ Detailed inputs and tolerances live in `tests/kernels/rope/cases.py`; the measur
 
 The full native regression suite passes 133 tests. The complete `setup.py build_ext --inplace` build passes.
 The installed extension's integration cases pass compute-sanitizer memcheck with zero errors.
+
+## Short training comparison
+
+A B300 training comparison combined the group RMS normalization and rotary embedding optimizations.
+These measurements describe their combined effect, rather than attributing a model-level gain to either
+operation independently. The baseline used the unchanged xllm implementation.
+
+Each of two placements ran 200 steps from the same K2 Horizon 7B final SFT/FTPO weights with fresh AdamW
+optimizers. Each arm used four nodes and 32 GPUs, FSDP2, bf16 computation with fp32 master weights,
+8192-token sequences, a global batch of 32, seed 42, peak learning rate 1e-5, and gradient clipping at 1.0.
+The second placement exchanged the physical node groups between implementations. Every run consumed
+52,428,800 training tokens. All 12,800 paired rank/batch input hashes matched.
+
+The text was a fixed sample of [TxT360-v2](https://huggingface.co/datasets/IFM/TxT360-v2), revision
+`a86bdfb101ebaaf71b445f95fb0f9b9bc2a47511`, with 70.6M training tokens and 1.0M held-out tokens counted
+with the K2 tokenizer. Held-out perplexity was evaluated every 50 steps, capped at two batches per rank.
+This comparison does not reproduce the original pretraining mixture, optimizer state, or batch order.
+The checkpoint's rotary base of 10,000,000 was preserved.
+
+| Measurement | Original | Combined optimizations |
+|---|---:|---:|
+| Geometric mean of median warm step latency | 0.598011 s | 0.576836 s |
+| Final held-out perplexity, placement 1 | 11.525846 | 11.525516 |
+| Final held-out perplexity, placement 2 | 11.526088 | 11.525371 |
+
+The crossover latency gain is **1.0367x**. Each median covers steps 21 through 200; checkpoint and evaluation
+periods are excluded. Input hashing and rank-zero operation-layout logging were enabled in both arms.
+
+This training comparison is not bit-exact. Mean absolute global-loss difference over both placements was
+0.000252; the largest difference was 0.026130. Repeating the original implementation alone produced a
+maximum difference of 0.026134. Final master-weight relative L2 differences were 0.0571% and 0.0592%;
+repeated original and optimized runs differed by 0.0555% and 0.0554%, respectively. Relative to the
+parameter updates rather than the full weights, implementation differences were 18.9% to 19.6%, versus
+18.3% for repeated runs of either unchanged implementation.
+
+Both implementations produced isolated gradient-norm spikes; maxima across their two runs were 43.7 for
+the original and 16.7 for the optimized build. No nonfinite losses, gradient norms, or final parameters were
+observed. These are short continued-training checks, not evidence of long-run convergence. They exercise
+group RMS normalization and RoPE; they do not exercise group layer normalization, timestep decay
+normalization, or AWM softmax. Hardware coverage remains B300 (sm_103a).
