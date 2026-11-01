@@ -112,3 +112,30 @@ trained together with nonzero AWM gradients and same-binary repeat controls.
 
 See [TDN and AWM precision](precision.md) for original-versus-optimized accuracy
 and measured FP32 performance tradeoffs.
+
+## Original and optimized errors against unrounded FP64 math
+
+The table reports the largest tensor relative L2 error across the model cases for
+each output: `norm(actual - reference) / norm(reference)`. Both implementations
+use identical inputs and are measured against independent, unrounded FP64 math.
+These errors include output rounding; the earlier numerical-agreement table uses
+a reference rounded to the output dtype and therefore measures a different error.
+Input quantization and RoPE angle-table generation are outside this comparison.
+Backward comparisons use each operation's specified inputs and saved statistics.
+
+| Output | Original relative L2 error (%) | Optimized relative L2 error (%) |
+|---|---:|---:|
+| y | 0.16982417 | 0.16982417 |
+| count | 0 | 0 |
+| mean | 0.18097047 | 0.18097215 |
+| var | 0.18576194 | 0.18576194 |
+| cummean | 0.00084215033 | 6.5464219e-05 |
+| cumrstd | 0.0016362352 | 9.7252459e-06 |
+| dx | 0.16602079 | 0.1660208 |
+| dprev_mean | 0.17584297 | 0.17584297 |
+| dprev_var | 0.20886832 | 0.20886832 |
+| dgamma | 0.16884993 | 0.16884993 |
+| dbeta | 0.16593221 | 0.16593221 |
+
+Per-case outputs, maximum absolute errors, and relative L2 errors are recorded in
+[timestep_decay_norm-fp64-errors.json](timestep_decay_norm-fp64-errors.json).
