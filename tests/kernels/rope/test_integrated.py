@@ -1,10 +1,16 @@
 """Exercise the public Python rotation helpers, including autograd and strided views."""
+
+if __package__ in (None, ""):
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
 import importlib.util
 from pathlib import Path
 import sys
 import pytest
 import torch
-import native_build
+from tests.kernels.rope import native_build
 
 
 @pytest.fixture(scope="module")
@@ -12,12 +18,17 @@ def module():
     if not torch.cuda.is_available() or torch.cuda.get_device_capability()[0] < 10:
         pytest.skip("requires a Blackwell GPU")
     ext = native_build.build()
+    previous = sys.modules.get("xllm_extension")
     sys.modules["xllm_extension"] = ext
     path = Path(__file__).resolve().parents[3] / "xllm/modules/rotary_positional_embedding.py"
     spec = importlib.util.spec_from_file_location("rotary_integration", path)
     result = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(result)
-    return result
+    yield result
+    if previous is None:
+        sys.modules.pop("xllm_extension", None)
+    else:
+        sys.modules["xllm_extension"] = previous
 
 
 @pytest.mark.parametrize("pair", [False, True])
@@ -84,3 +95,18 @@ def test_original_broadcast_and_dtype_support(module, variant):
         z = torch.view_as_complex(original.float().reshape(*original.shape[:-1], 16, 2))
         expected = torch.view_as_real(z * table.unsqueeze(1)).flatten(3).type_as(original)
         assert torch.equal(got, expected)
+
+
+def test_negative_view_preserves_values_and_gradients(module):
+    """Logical negative views must not be read as their underlying positive storage."""
+    x = torch.randn(1, 7, 2, 32, device="cuda", requires_grad=True)
+    negative = x._neg_view()
+    table = torch.polar(torch.ones(7, 16, device="cuda"), torch.randn(7, 16, device="cuda"))
+    actual = module.apply_rotary_embedding(negative, table, False)
+    z = torch.view_as_complex(negative.float().reshape(1, 7, 2, 16, 2))
+    expected = torch.view_as_real(z * table.unsqueeze(1)).flatten(3)
+    torch.testing.assert_close(actual, expected, atol=0, rtol=0)
+    grad = torch.randn_like(actual)
+    got = torch.autograd.grad(actual, x, grad, retain_graph=True)[0]
+    ref = torch.autograd.grad(expected, x, grad)[0]
+    torch.testing.assert_close(got, ref, atol=0, rtol=0)

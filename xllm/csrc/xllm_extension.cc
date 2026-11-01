@@ -31,9 +31,6 @@ PYBIND11_MODULE(xllm_extension, m) {
         "Grouped GEMM");
   
   py::module m_ops = m.def_submodule("ops", "Submodule for custom ops.");
-#ifdef XLLM_BLACKWELL
-  ops::DefineRotaryEmbeddingOp(m_ops);
-#endif
   ops::DefineAttentionOp(m_ops);
   ops::DefineMultiSegAttentionOp(m_ops);
   ops::DefineEMAHiddenOp(m_ops);
@@ -46,6 +43,9 @@ PYBIND11_MODULE(xllm_extension, m) {
   ops::DefineSequenceNormOp(m_ops);
   ops::DefineTimestepNormOp(m_ops);
   ops::DefineTimestepDecayNormCubOp(m_ops);
+#ifdef XLLM_BLACKWELL
+  ops::DefineRotaryEmbeddingOp(m_ops);
+#endif
 }
 
 }  // namespace xllm

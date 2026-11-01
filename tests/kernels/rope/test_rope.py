@@ -9,16 +9,20 @@ holds no NaN or Inf, and it is not all zeros where the reference is not.
     python tests/test_rope.py            # without pytest
 """
 
+if __package__ in (None, ""):
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
 import math
 import os
 import sys
 
 import torch
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import extension  # noqa: E402
-import cases  # noqa: E402
-import reference  # noqa: E402
+from tests.kernels.rope import extension
+from tests.kernels.rope import cases
+from tests.kernels.rope import reference
 
 try:
     import pytest

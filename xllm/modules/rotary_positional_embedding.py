@@ -31,7 +31,7 @@ def _fused_rotary(x1, x2, freqs, backward):
     if freqs.requires_grad or freqs.is_conj() or freqs.dtype != torch.complex64 or freqs.ndim != 2:
         return None
     if not all(x.is_cuda and x.ndim == 4 and x.dtype in (torch.float16, torch.bfloat16, torch.float32)
-               and x.stride(-1) == 1 and x.shape[-1] % 2 == 0 for x in tensors):
+               and not x.is_neg() and x.stride(-1) == 1 and x.shape[-1] % 2 == 0 for x in tensors):
         return None
     if freqs.shape != (x1.size(1), x1.size(3) // 2):
         return None

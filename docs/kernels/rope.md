@@ -80,7 +80,7 @@ Detailed inputs and tolerances live in `tests/kernels/rope/cases.py`; the measur
 
 ## Validation
 
-The full native regression suite passes 133 tests. The complete `setup.py build_ext --inplace` build passes.
+The full native regression suite passes 134 tests. The complete `setup.py build_ext --inplace` build passes.
 The installed extension's integration cases pass compute-sanitizer memcheck with zero errors.
 
 ## Short training comparison

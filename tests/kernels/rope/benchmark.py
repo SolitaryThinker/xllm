@@ -9,6 +9,11 @@ which is what the kernel replaces.
     python tests/benchmark.py [--case SUBSTRING ...] [--calls 50] [--trials 3] [--torch]
 """
 
+if __package__ in (None, ""):
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
 import argparse
 import math
 import os
@@ -17,9 +22,8 @@ import sys
 
 import torch
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import cases  # noqa: E402
-import extension  # noqa: E402
+from tests.kernels.rope import cases
+from tests.kernels.rope import extension
 
 
 def torch_rotate(conj, x1, x2, freqs_cis, out1, out2):
