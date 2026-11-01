@@ -1,0 +1,170 @@
+{
+  "model_preset": "gekko-0.9B",
+  "actual_parameters": 1651440640,
+  "initialization": "one saved fp32 seed-42 initialization; not a pretrained checkpoint",
+  "kernels": [
+    "group LayerNorm and RMSNorm",
+    "timestep decay norm",
+    "AWM chunk softmax",
+    "RoPE"
+  ],
+  "native_integration_tests_passed": 134,
+  "coverage": [
+    {
+      "nonzero_awm_key_gradient_elements": 1879048156,
+      "required_operations": {
+        "group_layer_norm_fwd_affine": 1120,
+        "group_layer_norm_bwd_affine": 560,
+        "group_rms_norm_fwd_affine": 1120,
+        "group_rms_norm_bwd_affine": 560,
+        "group_timestep_decay_norm_cub_fwd": 1160,
+        "group_timestep_decay_norm_cub_bwd": 580,
+        "chunk_softmax": 1680,
+        "rotary_embedding": 2800
+      },
+      "awm_modes": [
+        0,
+        1
+      ],
+      "rotary_conjugations": [
+        false,
+        true
+      ],
+      "all_four_families_exercised_in_forward_and_backward": true
+    },
+    {
+      "nonzero_awm_key_gradient_elements": 1879048152,
+      "required_operations": {
+        "group_layer_norm_fwd_affine": 1120,
+        "group_layer_norm_bwd_affine": 560,
+        "group_rms_norm_fwd_affine": 1120,
+        "group_rms_norm_bwd_affine": 560,
+        "group_timestep_decay_norm_cub_fwd": 1160,
+        "group_timestep_decay_norm_cub_bwd": 580,
+        "chunk_softmax": 1680,
+        "rotary_embedding": 2800
+      },
+      "awm_modes": [
+        0,
+        1
+      ],
+      "rotary_conjugations": [
+        false,
+        true
+      ],
+      "all_four_families_exercised_in_forward_and_backward": true
+    }
+  ],
+  "numerical_steps_per_arm_per_placement": 200,
+  "placements": 2,
+  "nodes_per_job": 8,
+  "nodes_per_arm": 4,
+  "gpus_per_arm": 32,
+  "sequence_length": 16384,
+  "chunk_size": 4096,
+  "global_batch_size": 32,
+  "dtype": "bf16 with fp32 master weights",
+  "optimizer": "fresh AdamW, lr=1e-4, warmup=10, cosine decay, clip=1.0",
+  "sca_backend": "swift",
+  "timestep_backend": "cub",
+  "identical_paired_batches_numerical": 12800,
+  "bit_exact": false,
+  "numerics": {
+    "mean_absolute_loss_difference": 0.004093177318572998,
+    "maximum_absolute_loss_difference": 0.025234699249267578,
+    "final_perplexity": [
+      {
+        "step": 200,
+        "metrics": {
+          "held_out_perplexity": {
+            "baseline": 782.9981568560308,
+            "optimized": 787.349262994415,
+            "absolute_difference": 4.351106138384125
+          }
+        }
+      },
+      {
+        "step": 200,
+        "metrics": {
+          "held_out_perplexity": {
+            "baseline": 785.7705207970913,
+            "optimized": 785.1042241965897,
+            "absolute_difference": 0.666296600501596
+          }
+        }
+      }
+    ],
+    "final_weight_relative_l2": [
+      0.006473519222089944,
+      0.005315603292036363
+    ],
+    "final_weight_max_absolute": [
+      0.005845319479703903,
+      0.00791197456419468
+    ],
+    "final_weight_difference_over_update_l2": [
+      0.05823613371538661,
+      0.04788250273951454
+    ]
+  },
+  "same_binary_repeat": {
+    "baseline": {
+      "mean_absolute_loss_difference": 0.0031592392921447753,
+      "maximum_absolute_loss_difference": 0.01475667953491211,
+      "maximum_gradient_norms": [
+        23.917356491088867,
+        23.914949417114258
+      ]
+    },
+    "optimized": {
+      "mean_absolute_loss_difference": 0.0030639338493347167,
+      "maximum_absolute_loss_difference": 0.018590927124023438,
+      "maximum_gradient_norms": [
+        23.88009262084961,
+        23.871877670288086
+      ]
+    }
+  },
+  "same_binary_weight_repeat": {
+    "baseline": {
+      "elements": 1651442032,
+      "unequal_bits": 1516731569,
+      "max_absolute": 0.0049676597118377686,
+      "relative_l2": 0.004206986765631203,
+      "difference_over_update_l2": 0.0378462835154854
+    },
+    "optimized": {
+      "elements": 1651442032,
+      "unequal_bits": 1517416142,
+      "max_absolute": 0.00551648810505867,
+      "relative_l2": 0.006696107576628428,
+      "difference_over_update_l2": 0.060348475528035225
+    }
+  },
+  "latency": {
+    "baseline_seconds": 0.7374114423567518,
+    "optimized_seconds": 0.6247646816277893,
+    "crossover_speedup": 1.1803027028279955,
+    "physical_group_speedups": [
+      1.1765308572901316,
+      1.18408664054234
+    ],
+    "descriptive_block_bootstrap_95_interval": [
+      1.1795525346824074,
+      1.1808559129808331
+    ],
+    "bootstrap_block_length": 5,
+    "bootstrap_repetitions": 1000,
+    "warmup_steps_excluded": 20,
+    "samples_per_arm": 360,
+    "instrumentation": "all-batch CPU hashes; operation layouts and nonzero AWM key gradients recorded on first 20 steps; timing starts at step 21",
+    "checkpoint_and_evaluation_time_excluded": true
+  },
+  "limitations": [
+    "short from-scratch validation does not qualify pretrained continuation or long-run convergence",
+    "only B300 sm_103a tested",
+    "training paths exercised; not every inference or backend variant"
+  ],
+  "effective_awm_training_coverage": true,
+  "training_tokens_per_run": 104857600
+}

@@ -104,3 +104,11 @@ Detailed inputs and tolerances live in `tests/kernels/timestep_decay_norm/cases.
 
 The full native regression suite passes 142 tests. The complete `setup.py build_ext --inplace` build passes.
 The installed extension's integration cases pass compute-sanitizer memcheck with zero errors.
+
+## Combined model training
+
+See [Gekko training comparison](gekko-training.md) for all four kernel families
+trained together with nonzero AWM gradients and same-binary repeat controls.
+
+See [TDN and AWM precision](precision.md) for original-versus-optimized accuracy
+and measured FP32 performance tradeoffs.
