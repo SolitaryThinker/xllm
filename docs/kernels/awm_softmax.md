@@ -90,3 +90,11 @@ Detailed inputs and tolerances live in `tests/kernels/awm_softmax/cases.py`; the
 
 The full native regression suite passes 136 tests. The complete `setup.py build_ext --inplace` build passes.
 The 18 native primitive integration cases pass compute-sanitizer memcheck with zero errors. The eight complete working-memory comparisons also pass. A separate sanitizer run through cuBLAS reported its initialization-time selective-recompilation API warning; it reported no invalid device-memory access.
+
+## Combined model training
+
+See [Gekko training comparison](gekko-training.md) for all four kernel families
+trained together with nonzero AWM gradients and same-binary repeat controls.
+
+See [TDN and AWM precision](precision.md) for original-versus-optimized accuracy
+and measured FP32 performance tradeoffs.
