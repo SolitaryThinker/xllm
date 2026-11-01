@@ -1,0 +1,437 @@
+{
+  "device": "NVIDIA B300 SXM6 AC",
+  "torch": "2.16.0.dev20261009+cu134",
+  "date": "2026-11-01",
+  "base": "692bc25",
+  "repetitions": 21,
+  "cold_l2_bytes": 536870912,
+  "native_event_overhead_ms": 0.0029440000653266907,
+  "results": [
+    {
+      "case": "train_fwd_4x256_b1_l8192",
+      "claimed": {"baseline_ms": 0.1316, "kernel_ms": 0.0097, "speedup": 13.6},
+      "native": {"case": "train_fwd_4x256_b1_l8192", "native_ms": 0.01532800029963255, "baseline_ms": 0.13209599256515503, "speedup": 8.617953417467097},
+      "primitive": {"event_ms": 0.015359999611973763, "overhead_adjusted_ms": 0.012255999725311995, "gpu_span_ms": 0.009663999999997031},
+      "fp64_reference": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8388608, "exact_elements": 8388409, "bit_exact": false, "max_abs_error": 0.000244140625, "finite": true, "relative_l2_error": 7.011476936595744e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 2048, "exact_elements": 1855, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 3.6179064518043924e-08}
+      ],
+      "repeatability": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8388608, "exact_elements": 8388608, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 2048, "exact_elements": 2048, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8388608, "exact_elements": 8388401, "bit_exact": false, "max_abs_error": 0.000244140625, "finite": true, "relative_l2_error": 7.007668562272942e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 2048, "exact_elements": 1914, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 2.7299355686842605e-08}
+      ]
+    },
+    {
+      "case": "train_bwd_4x256_b1_l8192",
+      "claimed": {"baseline_ms": 0.1811, "kernel_ms": 0.0139, "speedup": 13.0},
+      "native": {"case": "train_bwd_4x256_b1_l8192", "native_ms": 0.023455999791622162, "baseline_ms": 0.1783359944820404, "speedup": 7.603001196552582},
+      "primitive": {"event_ms": 0.01945599913597107, "overhead_adjusted_ms": 0.0163519992493093, "gpu_span_ms": 0.01276800000000003},
+      "fp64_reference": [
+        {"output": "dkey", "atol": 4e-06, "rtol": 0.016, "required_match": 0.999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8388608, "exact_elements": 8388419, "bit_exact": false, "max_abs_error": 3.0517578125e-05, "finite": true, "relative_l2_error": 2.1044739076242908e-05}
+      ],
+      "repeatability": [
+        {"output": "dkey", "atol": 4e-06, "rtol": 0.016, "required_match": 0.999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8388608, "exact_elements": 8388608, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "dkey", "atol": 4e-06, "rtol": 0.016, "required_match": 0.999, "matched_fraction": 0.9998140335083008, "passes_tolerance": true, "numel": 8388608, "exact_elements": 7396489, "bit_exact": false, "max_abs_error": 0.0009765625, "finite": true, "relative_l2_error": 0.0027577548919753324}
+      ]
+    },
+    {
+      "case": "train_fwd_4x256_b4_l8192",
+      "claimed": {"baseline_ms": 0.4388, "kernel_ms": 0.0327, "speedup": 13.4},
+      "native": {"case": "train_fwd_4x256_b4_l8192", "native_ms": 0.037856001406908035, "baseline_ms": 0.4280959963798523, "speedup": 11.308537100321761},
+      "primitive": {"event_ms": 0.036896001547575, "overhead_adjusted_ms": 0.03379200166091323, "gpu_span_ms": 0.030912000000000262},
+      "fp64_reference": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33553713, "bit_exact": false, "max_abs_error": 0.000244140625, "finite": true, "relative_l2_error": 4.2470783168732555e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8192, "exact_elements": 7489, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 3.692087120302823e-08}
+      ],
+      "repeatability": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33554432, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8192, "exact_elements": 8192, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33553693, "bit_exact": false, "max_abs_error": 0.000244140625, "finite": true, "relative_l2_error": 4.226055688313043e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8192, "exact_elements": 7709, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 2.7654668081994846e-08}
+      ]
+    },
+    {
+      "case": "train_bwd_4x256_b4_l8192",
+      "claimed": {"baseline_ms": 0.7121, "kernel_ms": 0.0305, "speedup": 23.3},
+      "native": {"case": "train_bwd_4x256_b4_l8192", "native_ms": 0.04915200173854828, "baseline_ms": 0.6880639791488647, "speedup": 13.998696997303348},
+      "primitive": {"event_ms": 0.035840000957250595, "overhead_adjusted_ms": 0.03273600107058883, "gpu_span_ms": 0.028831999999998515},
+      "fp64_reference": [
+        {"output": "dkey", "atol": 4e-06, "rtol": 0.016, "required_match": 0.999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33553724, "bit_exact": false, "max_abs_error": 6.103515625e-05, "finite": true, "relative_l2_error": 1.9473148066384614e-05}
+      ],
+      "repeatability": [
+        {"output": "dkey", "atol": 4e-06, "rtol": 0.016, "required_match": 0.999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33554432, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "dkey", "atol": 4e-06, "rtol": 0.016, "required_match": 0.999, "matched_fraction": 0.9997872710227966, "passes_tolerance": true, "numel": 33554432, "exact_elements": 30046911, "bit_exact": false, "max_abs_error": 0.00390625, "finite": true, "relative_l2_error": 0.0028582865518637854}
+      ]
+    },
+    {
+      "case": "train_fwd_4x256_b1_l16384",
+      "claimed": {"baseline_ms": 0.2409, "kernel_ms": 0.0201, "speedup": 12.0},
+      "native": {"case": "train_fwd_4x256_b1_l16384", "native_ms": 0.025536000728607178, "baseline_ms": 0.23552000522613525, "speedup": 9.223057585610483},
+      "primitive": {"event_ms": 0.025599999353289604, "overhead_adjusted_ms": 0.022495999466627836, "gpu_span_ms": 0.018752000000000407},
+      "fp64_reference": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16776778, "bit_exact": false, "max_abs_error": 6.103515625e-05, "finite": true, "relative_l2_error": 2.2805197168066165e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4096, "exact_elements": 3538, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 4.3241509755875424e-08}
+      ],
+      "repeatability": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16777216, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4096, "exact_elements": 4096, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16776788, "bit_exact": false, "max_abs_error": 6.103515625e-05, "finite": true, "relative_l2_error": 2.293798134168915e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4096, "exact_elements": 3772, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 3.0008652879529064e-08}
+      ]
+    },
+    {
+      "case": "train_bwd_4x256_b1_l16384",
+      "claimed": {"baseline_ms": 0.4645, "kernel_ms": 0.0204, "speedup": 22.8},
+      "native": {"case": "train_bwd_4x256_b1_l16384", "native_ms": 0.03174399957060814, "baseline_ms": 0.4240959882736206, "speedup": 13.35987884356867},
+      "primitive": {"event_ms": 0.025599999353289604, "overhead_adjusted_ms": 0.022495999466627836, "gpu_span_ms": 0.01977599999999802},
+      "fp64_reference": [
+        {"output": "dkey", "atol": 4e-06, "rtol": 0.016, "required_match": 0.999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16776953, "bit_exact": false, "max_abs_error": 6.103515625e-05, "finite": true, "relative_l2_error": 1.4464155954301137e-05}
+      ],
+      "repeatability": [
+        {"output": "dkey", "atol": 4e-06, "rtol": 0.016, "required_match": 0.999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16777216, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "dkey", "atol": 4e-06, "rtol": 0.016, "required_match": 0.999, "matched_fraction": 0.999600350856781, "passes_tolerance": true, "numel": 16777216, "exact_elements": 15481133, "bit_exact": false, "max_abs_error": 0.00390625, "finite": true, "relative_l2_error": 0.002944449423801229}
+      ]
+    },
+    {
+      "case": "prefill_4x256_b1_l16384",
+      "claimed": {"baseline_ms": 0.1902, "kernel_ms": 0.0242, "speedup": 7.9},
+      "native": {"case": "prefill_4x256_b1_l16384", "native_ms": 0.02969600073993206, "baseline_ms": 0.18636800348758698, "speedup": 6.2758620300335215},
+      "primitive": {"event_ms": 0.02969600073993206, "overhead_adjusted_ms": 0.026592000853270292, "gpu_span_ms": 0.023263999999999216},
+      "fp64_reference": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16776015, "bit_exact": false, "max_abs_error": 3.0517578125e-05, "finite": true, "relative_l2_error": 2.7014907671075812e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4096, "exact_elements": 3456, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 4.689960741794302e-08}
+      ],
+      "repeatability": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16777216, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4096, "exact_elements": 4096, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16775997, "bit_exact": false, "max_abs_error": 3.0517578125e-05, "finite": true, "relative_l2_error": 2.6382216642810346e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4096, "exact_elements": 3797, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 3.147858241368509e-08}
+      ]
+    },
+    {
+      "case": "prefill_4x256_b1_l16384_prev",
+      "claimed": {"baseline_ms": 0.2662, "kernel_ms": 0.0299, "speedup": 8.9},
+      "native": {"case": "prefill_4x256_b1_l16384_prev", "native_ms": 0.03580800071358681, "baseline_ms": 0.2561599910259247, "speedup": 7.153708275277391},
+      "primitive": {"event_ms": 0.035840000957250595, "overhead_adjusted_ms": 0.03273600107058883, "gpu_span_ms": 0.029888999999999215},
+      "fp64_reference": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16776060, "bit_exact": false, "max_abs_error": 3.0517578125e-05, "finite": true, "relative_l2_error": 2.7999630175578357e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4096, "exact_elements": 3333, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 4.4126293970868104e-08},
+        {"output": "prev_kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4194304, "exact_elements": 4194023, "bit_exact": false, "max_abs_error": 3.0517578125e-05, "finite": true, "relative_l2_error": 3.656374064286662e-05}
+      ],
+      "repeatability": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16777216, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4096, "exact_elements": 4096, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "prev_kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4194304, "exact_elements": 4194304, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16776040, "bit_exact": false, "max_abs_error": 3.0517578125e-05, "finite": true, "relative_l2_error": 2.8970529940610348e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4096, "exact_elements": 3722, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 3.0394575239179e-08},
+        {"output": "prev_kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4194304, "exact_elements": 4194024, "bit_exact": false, "max_abs_error": 3.0517578125e-05, "finite": true, "relative_l2_error": 3.676254520137787e-05}
+      ]
+    },
+    {
+      "case": "prefill_4x256_b1_l4096_prev",
+      "claimed": {"baseline_ms": 0.1047, "kernel_ms": 0.0128, "speedup": 8.2},
+      "native": {"case": "prefill_4x256_b1_l4096_prev", "native_ms": 0.019360000267624855, "baseline_ms": 0.10246399790048599, "speedup": 5.292561801862857},
+      "primitive": {"event_ms": 0.017376000061631203, "overhead_adjusted_ms": 0.014272000174969435, "gpu_span_ms": 0.01177599999999802},
+      "fp64_reference": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4194304, "exact_elements": 4194054, "bit_exact": false, "max_abs_error": 1.52587890625e-05, "finite": true, "relative_l2_error": 2.718060668253602e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 1024, "exact_elements": 825, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 4.516744411660189e-08},
+        {"output": "prev_kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4194304, "exact_elements": 4194044, "bit_exact": false, "max_abs_error": 3.0517578125e-05, "finite": true, "relative_l2_error": 4.332504126729692e-05}
+      ],
+      "repeatability": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4194304, "exact_elements": 4194304, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 1024, "exact_elements": 1024, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "prev_kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4194304, "exact_elements": 4194304, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4194304, "exact_elements": 4194024, "bit_exact": false, "max_abs_error": 1.52587890625e-05, "finite": true, "relative_l2_error": 2.793917566454833e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 1024, "exact_elements": 926, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 3.1070943304009335e-08},
+        {"output": "prev_kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4194304, "exact_elements": 4194049, "bit_exact": false, "max_abs_error": 3.0517578125e-05, "finite": true, "relative_l2_error": 4.449456939848805e-05}
+      ]
+    },
+    {
+      "case": "prefill_4x256_b8_l16384",
+      "claimed": {"baseline_ms": 1.3805, "kernel_ms": 0.146, "speedup": 9.5},
+      "native": {"case": "prefill_4x256_b8_l16384", "native_ms": 0.1515199989080429, "baseline_ms": 1.3312000036239624, "speedup": 8.785638946789224},
+      "primitive": {"event_ms": 0.1504960060119629, "overhead_adjusted_ms": 0.14739200612530112, "gpu_span_ms": 0.14339300000000002},
+      "fp64_reference": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 134217728, "exact_elements": 134208007, "bit_exact": false, "max_abs_error": 0.0001220703125, "finite": true, "relative_l2_error": 3.50590089378556e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 32768, "exact_elements": 27637, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 4.6591127377249656e-08}
+      ],
+      "repeatability": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 134217728, "exact_elements": 134217728, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 32768, "exact_elements": 32768, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 134217728, "exact_elements": 134207917, "bit_exact": false, "max_abs_error": 0.0001220703125, "finite": true, "relative_l2_error": 3.488892749361874e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 32768, "exact_elements": 30400, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 3.0894656838471194e-08}
+      ]
+    },
+    {
+      "case": "decode_4x256_b1",
+      "claimed": {"baseline_ms": 0.0757, "kernel_ms": 0.0088, "speedup": 8.6},
+      "native": {"case": "decode_4x256_b1", "native_ms": 0.013279999606311321, "baseline_ms": 0.07577600330114365, "speedup": 5.706024514122055},
+      "primitive": {"event_ms": 0.013311999849975109, "overhead_adjusted_ms": 0.010207999963313341, "gpu_span_ms": 0.007680000000000291},
+      "fp64_reference": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4194304, "exact_elements": 4194022, "bit_exact": false, "max_abs_error": 1.52587890625e-05, "finite": true, "relative_l2_error": 2.9223148235518307e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 1024, "exact_elements": 810, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 4.648184487275669e-08}
+      ],
+      "repeatability": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4194304, "exact_elements": 4194304, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 1024, "exact_elements": 1024, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4194304, "exact_elements": 4194000, "bit_exact": false, "max_abs_error": 1.52587890625e-05, "finite": true, "relative_l2_error": 2.9221811006562607e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 1024, "exact_elements": 949, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 2.5674003963898076e-08}
+      ]
+    },
+    {
+      "case": "decode_4x256_b8",
+      "claimed": {"baseline_ms": 0.4096, "kernel_ms": 0.0406, "speedup": 10.1},
+      "native": {"case": "decode_4x256_b8", "native_ms": 0.045951999723911285, "baseline_ms": 0.39526399970054626, "speedup": 8.601671354356082},
+      "primitive": {"event_ms": 0.04604800045490265, "overhead_adjusted_ms": 0.04294400056824088, "gpu_span_ms": 0.038592000000000556},
+      "fp64_reference": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33551833, "bit_exact": false, "max_abs_error": 6.103515625e-05, "finite": true, "relative_l2_error": 3.624044600186288e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8192, "exact_elements": 6517, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 4.636355328138088e-08}
+      ],
+      "repeatability": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33554432, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8192, "exact_elements": 8192, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33551778, "bit_exact": false, "max_abs_error": 6.103515625e-05, "finite": true, "relative_l2_error": 3.6984896739771296e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8192, "exact_elements": 7349, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 3.233014266388871e-08}
+      ]
+    },
+    {
+      "case": "train_fwd_8x128_b1_l8192",
+      "claimed": null,
+      "native": {"case": "train_fwd_8x128_b1_l8192", "native_ms": 0.017023999243974686, "baseline_ms": 0.13104000687599182, "speedup": 7.697369166787933},
+      "primitive": {"event_ms": 0.015359999611973763, "overhead_adjusted_ms": 0.012255999725311995, "gpu_span_ms": 0.010239999999997963},
+      "fp64_reference": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8388608, "exact_elements": 8388394, "bit_exact": false, "max_abs_error": 1.52587890625e-05, "finite": true, "relative_l2_error": 1.8032468850699678e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 2048, "exact_elements": 1882, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 3.693167268118338e-08}
+      ],
+      "repeatability": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8388608, "exact_elements": 8388608, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 2048, "exact_elements": 2048, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8388608, "exact_elements": 8388390, "bit_exact": false, "max_abs_error": 1.52587890625e-05, "finite": true, "relative_l2_error": 1.8089917632365468e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 2048, "exact_elements": 1924, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 2.8924881808981932e-08}
+      ]
+    },
+    {
+      "case": "train_bwd_8x128_b1_l8192",
+      "claimed": null,
+      "native": {"case": "train_bwd_8x128_b1_l8192", "native_ms": 0.01945599913597107, "baseline_ms": 0.18016000092029572, "speedup": 9.259868879579066},
+      "primitive": {"event_ms": 0.015359999611973763, "overhead_adjusted_ms": 0.012255999725311995, "gpu_span_ms": 0.0102400000000016},
+      "fp64_reference": [
+        {"output": "dkey", "atol": 4e-06, "rtol": 0.016, "required_match": 0.999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8388608, "exact_elements": 8388549, "bit_exact": false, "max_abs_error": 6.103515625e-05, "finite": true, "relative_l2_error": 1.8522205834846414e-05}
+      ],
+      "repeatability": [
+        {"output": "dkey", "atol": 4e-06, "rtol": 0.016, "required_match": 0.999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8388608, "exact_elements": 8388608, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "dkey", "atol": 4e-06, "rtol": 0.016, "required_match": 0.999, "matched_fraction": 0.9996938705444336, "passes_tolerance": true, "numel": 8388608, "exact_elements": 8079042, "bit_exact": false, "max_abs_error": 0.00390625, "finite": true, "relative_l2_error": 0.0026862857951963216}
+      ]
+    },
+    {
+      "case": "train_fwd_8x128_b4_l8192",
+      "claimed": null,
+      "native": {"case": "train_fwd_8x128_b4_l8192", "native_ms": 0.039903998374938965, "baseline_ms": 0.4249599874019623, "speedup": 10.649559059446315},
+      "primitive": {"event_ms": 0.03993599861860275, "overhead_adjusted_ms": 0.036831998731940985, "gpu_span_ms": 0.03468800000000192},
+      "fp64_reference": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33553594, "bit_exact": false, "max_abs_error": 0.0009765625, "finite": true, "relative_l2_error": 0.00014251200528480243},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8192, "exact_elements": 7498, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 3.7099163364263074e-08}
+      ],
+      "repeatability": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33554432, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8192, "exact_elements": 8192, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33553588, "bit_exact": false, "max_abs_error": 0.0009765625, "finite": true, "relative_l2_error": 0.00014251098469326095},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8192, "exact_elements": 7647, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 3.0016849633704554e-08}
+      ]
+    },
+    {
+      "case": "train_bwd_8x128_b4_l8192",
+      "claimed": null,
+      "native": {"case": "train_bwd_8x128_b4_l8192", "native_ms": 0.04057599976658821, "baseline_ms": 0.6922240257263184, "speedup": 17.059937640681905},
+      "primitive": {"event_ms": 0.02969600073993206, "overhead_adjusted_ms": 0.026592000853270292, "gpu_span_ms": 0.023936000000001515},
+      "fp64_reference": [
+        {"output": "dkey", "atol": 4e-06, "rtol": 0.016, "required_match": 0.999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33554053, "bit_exact": false, "max_abs_error": 0.0001220703125, "finite": true, "relative_l2_error": 2.712590597939416e-05}
+      ],
+      "repeatability": [
+        {"output": "dkey", "atol": 4e-06, "rtol": 0.016, "required_match": 0.999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33554432, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "dkey", "atol": 4e-06, "rtol": 0.016, "required_match": 0.999, "matched_fraction": 0.9997305274009705, "passes_tolerance": true, "numel": 33554432, "exact_elements": 31554645, "bit_exact": false, "max_abs_error": 0.00390625, "finite": true, "relative_l2_error": 0.0027500116012991295}
+      ]
+    },
+    {
+      "case": "train_fwd_8x128_b1_l16384",
+      "claimed": null,
+      "native": {"case": "train_fwd_8x128_b1_l16384", "native_ms": 0.023520000278949738, "baseline_ms": 0.23552000522613525, "speedup": 10.013605545614057},
+      "primitive": {"event_ms": 0.021503999829292297, "overhead_adjusted_ms": 0.01839999994263053, "gpu_span_ms": 0.01708799999999974},
+      "fp64_reference": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16776867, "bit_exact": false, "max_abs_error": 6.103515625e-05, "finite": true, "relative_l2_error": 2.891584643510879e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4096, "exact_elements": 3521, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 4.0323558967971705e-08}
+      ],
+      "repeatability": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16777216, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4096, "exact_elements": 4096, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16776869, "bit_exact": false, "max_abs_error": 6.103515625e-05, "finite": true, "relative_l2_error": 2.7929106717104313e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4096, "exact_elements": 3746, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 2.813457583940693e-08}
+      ]
+    },
+    {
+      "case": "train_bwd_8x128_b1_l16384",
+      "claimed": null,
+      "native": {"case": "train_bwd_8x128_b1_l16384", "native_ms": 0.03379200026392937, "baseline_ms": 0.42342400550842285, "speedup": 12.530303095445902},
+      "primitive": {"event_ms": 0.027615999802947044, "overhead_adjusted_ms": 0.024511999916285276, "gpu_span_ms": 0.02143999999999869},
+      "fp64_reference": [
+        {"output": "dkey", "atol": 4e-06, "rtol": 0.016, "required_match": 0.999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16776853, "bit_exact": false, "max_abs_error": 6.103515625e-05, "finite": true, "relative_l2_error": 2.091575477531008e-05}
+      ],
+      "repeatability": [
+        {"output": "dkey", "atol": 4e-06, "rtol": 0.016, "required_match": 0.999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16777216, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "dkey", "atol": 4e-06, "rtol": 0.016, "required_match": 0.999, "matched_fraction": 0.9995887279510498, "passes_tolerance": true, "numel": 16777216, "exact_elements": 15093454, "bit_exact": false, "max_abs_error": 0.00390625, "finite": true, "relative_l2_error": 0.0027255183550445594}
+      ]
+    },
+    {
+      "case": "prefill_8x128_b1_l16384",
+      "claimed": null,
+      "native": {"case": "prefill_8x128_b1_l16384", "native_ms": 0.029664000496268272, "baseline_ms": 0.18636800348758698, "speedup": 6.282632159173273},
+      "primitive": {"event_ms": 0.02969600073993206, "overhead_adjusted_ms": 0.026592000853270292, "gpu_span_ms": 0.023616000000001806},
+      "fp64_reference": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16776039, "bit_exact": false, "max_abs_error": 3.0517578125e-05, "finite": true, "relative_l2_error": 2.7339688691993404e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4096, "exact_elements": 3485, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 4.553267040007305e-08}
+      ],
+      "repeatability": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16777216, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4096, "exact_elements": 4096, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16776055, "bit_exact": false, "max_abs_error": 3.0517578125e-05, "finite": true, "relative_l2_error": 2.89924522946069e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4096, "exact_elements": 3801, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 3.09828704212369e-08}
+      ]
+    },
+    {
+      "case": "prefill_8x128_b1_l16384_prev",
+      "claimed": null,
+      "native": {"case": "prefill_8x128_b1_l16384_prev", "native_ms": 0.035840000957250595, "baseline_ms": 0.2569600045681, "speedup": 7.169642793107007},
+      "primitive": {"event_ms": 0.035840000957250595, "overhead_adjusted_ms": 0.03273600107058883, "gpu_span_ms": 0.02966400000000067},
+      "fp64_reference": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16776056, "bit_exact": false, "max_abs_error": 1.52587890625e-05, "finite": true, "relative_l2_error": 2.0451587414726616e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4096, "exact_elements": 3255, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 4.617542727482833e-08},
+        {"output": "prev_kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4194304, "exact_elements": 4194038, "bit_exact": false, "max_abs_error": 6.103515625e-05, "finite": true, "relative_l2_error": 4.536339200240161e-05}
+      ],
+      "repeatability": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16777216, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4096, "exact_elements": 4096, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "prev_kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4194304, "exact_elements": 4194304, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16776023, "bit_exact": false, "max_abs_error": 1.52587890625e-05, "finite": true, "relative_l2_error": 2.28129883595912e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4096, "exact_elements": 3715, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 3.0113490900235315e-08},
+        {"output": "prev_kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4194304, "exact_elements": 4194024, "bit_exact": false, "max_abs_error": 6.103515625e-05, "finite": true, "relative_l2_error": 4.500552251018081e-05}
+      ]
+    },
+    {
+      "case": "prefill_8x128_b1_l4096_prev",
+      "claimed": null,
+      "native": {"case": "prefill_8x128_b1_l4096_prev", "native_ms": 0.019392000511288643, "baseline_ms": 0.10236799716949463, "speedup": 5.278877602643588},
+      "primitive": {"event_ms": 0.017376000061631203, "overhead_adjusted_ms": 0.014272000174969435, "gpu_span_ms": 0.011808999999997467},
+      "fp64_reference": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4194304, "exact_elements": 4193954, "bit_exact": false, "max_abs_error": 7.62939453125e-06, "finite": true, "relative_l2_error": 2.053744745313845e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 1024, "exact_elements": 818, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 4.549610182205413e-08},
+        {"output": "prev_kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4194304, "exact_elements": 4194034, "bit_exact": false, "max_abs_error": 1.52587890625e-05, "finite": true, "relative_l2_error": 2.875231178933354e-05}
+      ],
+      "repeatability": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4194304, "exact_elements": 4194304, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 1024, "exact_elements": 1024, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "prev_kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4194304, "exact_elements": 4194304, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4194304, "exact_elements": 4193974, "bit_exact": false, "max_abs_error": 7.62939453125e-06, "finite": true, "relative_l2_error": 2.1983746576772327e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 1024, "exact_elements": 940, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 2.8243898959224415e-08},
+        {"output": "prev_kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4194304, "exact_elements": 4194025, "bit_exact": false, "max_abs_error": 1.52587890625e-05, "finite": true, "relative_l2_error": 2.8376617722669143e-05}
+      ]
+    },
+    {
+      "case": "prefill_8x128_b8_l16384",
+      "claimed": null,
+      "native": {"case": "prefill_8x128_b8_l16384", "native_ms": 0.1515520066022873, "baseline_ms": 1.3302079439163208, "speedup": 8.777237423237422},
+      "primitive": {"event_ms": 0.15052799880504608, "overhead_adjusted_ms": 0.1474239989183843, "gpu_span_ms": 0.1427530000000006},
+      "fp64_reference": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 134217728, "exact_elements": 134208495, "bit_exact": false, "max_abs_error": 0.0001220703125, "finite": true, "relative_l2_error": 4.112824163061679e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 32768, "exact_elements": 27675, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 4.64869613881574e-08}
+      ],
+      "repeatability": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 134217728, "exact_elements": 134217728, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 32768, "exact_elements": 32768, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 134217728, "exact_elements": 134208348, "bit_exact": false, "max_abs_error": 0.0001220703125, "finite": true, "relative_l2_error": 4.0141678505365114e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 32768, "exact_elements": 30405, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 3.0964667887731785e-08}
+      ]
+    },
+    {
+      "case": "decode_8x128_b1",
+      "claimed": null,
+      "native": {"case": "decode_8x128_b1", "native_ms": 0.013279999606311321, "baseline_ms": 0.0777600035071373, "speedup": 5.855422124423998},
+      "primitive": {"event_ms": 0.013279999606311321, "overhead_adjusted_ms": 0.010175999719649553, "gpu_span_ms": 0.007680000000000291},
+      "fp64_reference": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4194304, "exact_elements": 4194023, "bit_exact": false, "max_abs_error": 7.62939453125e-06, "finite": true, "relative_l2_error": 2.1990042785621967e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 1024, "exact_elements": 824, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 4.5142279805157585e-08}
+      ],
+      "repeatability": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4194304, "exact_elements": 4194304, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 1024, "exact_elements": 1024, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4194304, "exact_elements": 4194022, "bit_exact": false, "max_abs_error": 7.62939453125e-06, "finite": true, "relative_l2_error": 2.1888971183125895e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 1024, "exact_elements": 913, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 3.236972985393061e-08}
+      ]
+    },
+    {
+      "case": "decode_8x128_b8",
+      "claimed": null,
+      "native": {"case": "decode_8x128_b8", "native_ms": 0.04399999976158142, "baseline_ms": 0.39529600739479065, "speedup": 8.984000216744164},
+      "primitive": {"event_ms": 0.04403200000524521, "overhead_adjusted_ms": 0.04092800011858344, "gpu_span_ms": 0.03820799999999872},
+      "fp64_reference": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33552088, "bit_exact": false, "max_abs_error": 3.0517578125e-05, "finite": true, "relative_l2_error": 2.7970943140633877e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8192, "exact_elements": 6467, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 4.696127194535256e-08}
+      ],
+      "repeatability": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33554432, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8192, "exact_elements": 8192, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "kkey", "atol": 1e-06, "rtol": 0.016, "required_match": 0.9999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33552026, "bit_exact": false, "max_abs_error": 3.0517578125e-05, "finite": true, "relative_l2_error": 2.8050584535415697e-05},
+        {"output": "lse_out", "atol": 0.0001, "rtol": 1e-05, "required_match": 1.0, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8192, "exact_elements": 7377, "bit_exact": false, "max_abs_error": 9.5367431640625e-07, "finite": true, "relative_l2_error": 3.140676279473664e-08}
+      ]
+    }
+  ]
+}

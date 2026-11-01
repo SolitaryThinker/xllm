@@ -795,7 +795,7 @@ class GekkoBlockFunction(torch.autograd.Function):
                 accum_memory, memory_residual, memory_mask,
                 log_norm_term, curr_log_norm_term, accum_log_norm_term, ratio,
                 awk_out_mask, prev_aqk, prev_kkey, prev_av,
-                prev_k_fp32, prev_kk_fp32, prev_k_mask, awm_orthogonal_update
+                prev_k_fp32, prev_kk_fp32, prev_k_mask, awm_orthogonal_update, original_key=akk
             )
 
             assert memory_grad is not None and log_norm_term_grad is not None
@@ -835,7 +835,7 @@ class GekkoBlockFunction(torch.autograd.Function):
                 accum_memory, memory_residual, memory_mask,
                 log_norm_term, curr_log_norm_term, accum_log_norm_term, ratio,
                 awk_out_mask, prev_aqk, prev_kkey, prev_av,
-                prev_k_fp32, prev_kk_fp32, prev_k_mask, awm_orthogonal_update
+                prev_k_fp32, prev_kk_fp32, prev_k_mask, awm_orthogonal_update, original_key=akk
             )
 
             handle5 = None

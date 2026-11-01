@@ -17,6 +17,7 @@ from xllm.modules.fused_ops import (
     rejection_bwd
 )
 from .utils import logsumexp_backward
+from . import chunk_softmax
 
 
 class AdaptiveWorkingMemoryFunc(torch.autograd.Function):
@@ -88,7 +89,7 @@ class AdaptiveWorkingMemoryFunc(torch.autograd.Function):
             rvalue, rvalue_rstd, vvalue, avalue, k_fp32, kk_fp32, key_mask,
             accum_memory, memory_residual, memory_mask,
             log_norm_term, curr_log_norm_term, accum_log_norm_term, ratio, out_mask,
-            prev_qk, prev_kk, prev_v, prev_k_fp32, prev_kk_fp32, prev_k_mask, ortho
+            prev_qk, prev_kk, prev_v, prev_k_fp32, prev_kk_fp32, prev_k_mask, ortho, k
         )
 
         return (q_grad, qk_grad, k_grad, v_grad, None, mem_grad, lnt_grad,
@@ -163,30 +164,34 @@ def _adaptive_working_memory_fwd(
         prev_k_mask = None
         memory_mask = None
 
-    # B x K x L x S -> B x K x S x L
-    k_fp32 = rearrange(key, 'b k l d -> b k d l').float().contiguous()
-    if key_mask is not None:
-        k_fp32.masked_fill_(key_mask, value=float("-inf"))
-    # B x K x S x N x C
-    k_fp32 = rearrange(k_fp32, 'b k d (n c) -> b k d n c', n=nc)
-    # B x K x S x L
-    kkey = rearrange(F.softmax(k_fp32, dim=-1).to(key), 'b k d n c -> b k d (n c)')
-    # B x K x S x N
-    curr_log_norm_term = torch.empty(bsz, n_kv_heads, qk_head_dim, nc, dtype=torch.float32, device=key.device)
-    torch.logsumexp(k_fp32[:, :, :, :-1], dim=-1, out=curr_log_norm_term[:, :, :, 1:])
-
-    if prev_key is not None:
-        assert prev_qkey is not None
-        # B x K x S x C
-        prev_k_fp32 = rearrange(prev_key, 'b k c d -> b k d c').float().contiguous()
-        if prev_k_mask is not None:
-            prev_k_fp32.masked_fill_(prev_k_mask, value=float("-inf"))
-        prev_kkey = F.softmax(prev_k_fp32, dim=-1).to(key)
-        torch.logsumexp(prev_k_fp32, dim=-1, out=curr_log_norm_term[:, :, :, 0])
+    if chunk_softmax.available(key) and prev_k_mask is None:
+        kkey, curr_log_norm_term, prev_kkey = chunk_softmax.forward(key, chunk_size, key_mask, prev_key)
     else:
-        assert prev_qkey is None
-        prev_kkey = None
-        curr_log_norm_term[:, :, :, 0] = float("-inf")
+        # B x K x L x S -> B x K x S x L
+        k_fp32 = rearrange(key, 'b k l d -> b k d l').float().contiguous()
+        if key_mask is not None:
+            k_fp32.masked_fill_(key_mask, value=float("-inf"))
+        # B x K x S x N x C
+        k_fp32 = rearrange(k_fp32, 'b k d (n c) -> b k d n c', n=nc)
+        # B x K x S x L
+        kkey = rearrange(F.softmax(k_fp32, dim=-1).to(key), 'b k d n c -> b k d (n c)')
+        # B x K x S x N
+        curr_log_norm_term = torch.empty(bsz, n_kv_heads, qk_head_dim, nc, dtype=torch.float32, device=key.device)
+        torch.logsumexp(k_fp32[:, :, :, :-1], dim=-1, out=curr_log_norm_term[:, :, :, 1:])
+
+        if prev_key is not None:
+            assert prev_qkey is not None
+            # B x K x S x C
+            prev_k_fp32 = rearrange(prev_key, 'b k c d -> b k d c').float().contiguous()
+            if prev_k_mask is not None:
+                prev_k_fp32.masked_fill_(prev_k_mask, value=float("-inf"))
+            prev_kkey = F.softmax(prev_k_fp32, dim=-1).to(key)
+            torch.logsumexp(prev_k_fp32, dim=-1, out=curr_log_norm_term[:, :, :, 0])
+        else:
+            assert prev_qkey is None
+            prev_kkey = None
+            curr_log_norm_term[:, :, :, 0] = float("-inf")
+
 
     # B x H x L x V
     out = torch.empty(bsz, n_heads, seq_len, v_head_dim, dtype=value.dtype, device=value.device)
@@ -305,38 +310,52 @@ def _adaptive_working_memory_accum_fwd(
         prev_k_mask = None
         memory_mask = None
 
-    # B x K x L x S -> B x K x S x L
-    k_fp32 = rearrange(key, 'b k l d -> b k d l').float().contiguous()
-    if key_mask is not None:
-        k_fp32.masked_fill_(key_mask, value=float("-inf"))
-        key_mask = rearrange(key_mask, 'b 1 1 l -> b 1 l 1')
-    # B x K x S x N x C
-    k_fp32 = rearrange(k_fp32, 'b k d (n c) -> b k d n c', n=nc)
-    kk_fp32 = F.softmax(k_fp32, dim=-1)
-    # B x K x S x L
-    kkey = rearrange(F.softmax(k_fp32, dim=-1).to(key), 'b k d n c -> b k d (n c)')
-    # B x K x S x N
-    curr_log_norm_term = torch.empty(bsz, n_kv_heads, qk_head_dim, nc, dtype=torch.float32, device=key.device)
-    torch.logsumexp(k_fp32[:, :, :, :-1], dim=4, out=curr_log_norm_term[:, :, :, 1:])
-    accum_log_norm_term = torch.empty(bsz, n_kv_heads, qk_head_dim, nc, dtype=torch.float32, device=key.device)
-    ratio = torch.empty(nc, bsz, n_kv_heads, qk_head_dim, 1, dtype=key.dtype, device=key.device)
-
-    if prev_key is not None:
-        assert prev_qkey is not None
-        # B x K x S x C
-        prev_k_fp32 = rearrange(prev_key, 'b k c d -> b k d c').float().contiguous()
-        if prev_k_mask is not None:
-            prev_k_fp32.masked_fill_(prev_k_mask, value=float("-inf"))
-            prev_k_mask = rearrange(prev_k_mask, 'b 1 1 c -> b 1 c 1')
-        prev_kk_fp32 = F.softmax(prev_k_fp32, dim=-1)
-        prev_kkey = prev_kk_fp32.to(key)
-        torch.logsumexp(prev_k_fp32, dim=3, out=curr_log_norm_term[:, :, :, 0])
+    if chunk_softmax.available(key) and prev_k_mask is None:
+        kkey, curr_log_norm_term, prev_kkey = chunk_softmax.forward(key, chunk_size, key_mask, prev_key)
+        k_fp32 = key.permute(0, 1, 3, 2).float().contiguous()
+        if key_mask is not None:
+            k_fp32.masked_fill_(key_mask, -torch.inf)
+            key_mask = key_mask.transpose(2, 3)
+        k_fp32 = k_fp32.reshape(bsz, n_kv_heads, qk_head_dim, nc, chunk_size)
+        kk_fp32 = torch.softmax(k_fp32, dim=-1)
+        prev_k_fp32 = None if prev_key is None else prev_key.transpose(2, 3).float().contiguous()
+        prev_kk_fp32 = None if prev_key is None else torch.softmax(prev_k_fp32, dim=-1)
+        accum_log_norm_term = torch.empty_like(curr_log_norm_term)
+        ratio = torch.empty(nc, bsz, n_kv_heads, qk_head_dim, 1, dtype=key.dtype, device=key.device)
     else:
-        assert prev_qkey is None
-        prev_kkey = None
-        prev_k_fp32 = None
-        prev_kk_fp32 = None
-        curr_log_norm_term[:, :, :, 0] = float("-inf")
+        # B x K x L x S -> B x K x S x L
+        k_fp32 = rearrange(key, 'b k l d -> b k d l').float().contiguous()
+        if key_mask is not None:
+            k_fp32.masked_fill_(key_mask, value=float("-inf"))
+            key_mask = rearrange(key_mask, 'b 1 1 l -> b 1 l 1')
+        # B x K x S x N x C
+        k_fp32 = rearrange(k_fp32, 'b k d (n c) -> b k d n c', n=nc)
+        kk_fp32 = F.softmax(k_fp32, dim=-1)
+        # B x K x S x L
+        kkey = rearrange(F.softmax(k_fp32, dim=-1).to(key), 'b k d n c -> b k d (n c)')
+        # B x K x S x N
+        curr_log_norm_term = torch.empty(bsz, n_kv_heads, qk_head_dim, nc, dtype=torch.float32, device=key.device)
+        torch.logsumexp(k_fp32[:, :, :, :-1], dim=4, out=curr_log_norm_term[:, :, :, 1:])
+        accum_log_norm_term = torch.empty(bsz, n_kv_heads, qk_head_dim, nc, dtype=torch.float32, device=key.device)
+        ratio = torch.empty(nc, bsz, n_kv_heads, qk_head_dim, 1, dtype=key.dtype, device=key.device)
+
+        if prev_key is not None:
+            assert prev_qkey is not None
+            # B x K x S x C
+            prev_k_fp32 = rearrange(prev_key, 'b k c d -> b k d c').float().contiguous()
+            if prev_k_mask is not None:
+                prev_k_fp32.masked_fill_(prev_k_mask, value=float("-inf"))
+                prev_k_mask = rearrange(prev_k_mask, 'b 1 1 c -> b 1 c 1')
+            prev_kk_fp32 = F.softmax(prev_k_fp32, dim=-1)
+            prev_kkey = prev_kk_fp32.to(key)
+            torch.logsumexp(prev_k_fp32, dim=3, out=curr_log_norm_term[:, :, :, 0])
+        else:
+            assert prev_qkey is None
+            prev_kkey = None
+            prev_k_fp32 = None
+            prev_kk_fp32 = None
+            curr_log_norm_term[:, :, :, 0] = float("-inf")
+
 
     accum_memory = torch.zeros(nc, bsz, n_kv_heads, qk_head_dim, v_head_dim, dtype=key.dtype, device=key.device)
     memory_residual = torch.zeros_like(accum_memory)
@@ -455,7 +474,8 @@ def _adaptive_working_memory_bwd(
     prev_k_fp32: Optional[Tensor],
     prev_kk_fp32: Optional[Tensor],
     prev_k_mask: Optional[Tensor],
-    ortho: bool
+    ortho: bool,
+    original_key: Optional[Tensor] = None,
 ):
     bsz, n_heads, seq_len, qk_head_dim = query.shape
     n_kv_heads = qkey.shape[1]
@@ -464,6 +484,9 @@ def _adaptive_working_memory_bwd(
     nc = seq_len // chunk_size
     n_rep = n_heads // n_kv_heads
 
+    fused_softmax = chunk_softmax.available(qkey)
+    softmax_grads = torch.zeros((bsz, n_kv_heads, qk_head_dim, seq_len - chunk_size), device=qkey.device,
+                                dtype=torch.float32) if fused_softmax else None
     query_grad = torch.empty(bsz, n_heads, seq_len, qk_head_dim, dtype=query.dtype, device=query.device)
     qkey_grad = torch.zeros_like(qkey)
     key_grad = torch.zeros_like(qkey)
@@ -587,20 +610,29 @@ def _adaptive_working_memory_bwd(
                 prev_qkey_grad = prev_qk_grad
             else:
                 value_grad[:, :, pbos:bos] = v_grad
-                key_grad[:, :, pbos:bos] = rearrange(torch.ops.aten._softmax_backward_data(
-                    prev_kk_grad, kk_fp32[:, :, :, c - 1], -1, torch.float32
-                ).to(qkey), 'b h s c -> b h c s')
+                if fused_softmax:
+                    softmax_grads[..., pbos:bos] = prev_kk_grad
+                else:
+                    key_grad[:, :, pbos:bos] = rearrange(torch.ops.aten._softmax_backward_data(
+                        prev_kk_grad, kk_fp32[:, :, :, c - 1], -1, torch.float32
+                    ).to(qkey), 'b h s c -> b h c s')
                 qkey_grad[:, :, pbos:bos] = prev_qk_grad
 
-    # B x H x S/H x (N-1) x C -> B x H x S/H x (N-1)*C -> B x H x (N-1)*C x S/H
-    key_grad_log_term = logsumexp_backward(
-        curr_log_norm_term_grad[:, :, :, 1:], k_fp32[:, :, :, :-1], curr_log_norm_term[:, :, :, 1:], dim=4
-    ).to(qkey)
-    key_grad_log_term = rearrange(key_grad_log_term, 'b h s n c -> b h (n c) s')
+    if fused_softmax:
+        if original_key is None:
+            original_key = k_fp32.reshape(bsz, n_kv_heads, qk_head_dim, seq_len).permute(0, 1, 3, 2).to(key_grad)
+        key_grad = chunk_softmax.backward(original_key, chunk_size, key_mask, curr_log_norm_term,
+                                         softmax_grads, curr_log_norm_term_grad)
+    else:
+        # B x H x S/H x (N-1) x C -> B x H x S/H x (N-1)*C -> B x H x (N-1)*C x S/H
+        key_grad_log_term = logsumexp_backward(
+            curr_log_norm_term_grad[:, :, :, 1:], k_fp32[:, :, :, :-1], curr_log_norm_term[:, :, :, 1:], dim=4
+        ).to(qkey)
+        key_grad_log_term = rearrange(key_grad_log_term, 'b h s n c -> b h (n c) s')
 
-    key_grad[:, :, :seq_len - chunk_size] += key_grad_log_term
-    if key_mask is not None:
-        key_grad.masked_fill_(key_mask, value=0.)
+        key_grad[:, :, :seq_len - chunk_size] += key_grad_log_term
+        if key_mask is not None:
+            key_grad.masked_fill_(key_mask, value=0.)
 
     if prev_qkey is not None:
         # B x H x S/H x C -> B x H x C x S/H
@@ -696,7 +728,8 @@ def adaptive_working_memory_bwd(
     prev_k_fp32: Optional[Tensor],
     prev_kk_fp32: Optional[Tensor],
     prev_k_mask: Optional[Tensor],
-    ortho: bool
+    ortho: bool,
+    original_key: Optional[Tensor] = None,
 ) -> Tuple[Tensor, Tensor, Tensor, Tensor,
            Optional[Tensor], Optional[Tensor], Optional[Tensor],
            Optional[Tensor], Optional[Tensor]]:
@@ -705,5 +738,5 @@ def adaptive_working_memory_bwd(
         rvalue, rvalue_rstd, vvalue, avalue, k_fp32, kk_fp32, key_mask,
         accum_memory, memory_residual, memory_mask,
         log_norm_term, curr_log_norm_term, accum_log_norm_term, ratio, out_mask,
-        prev_qkey, prev_kkey, prev_value, prev_k_fp32, prev_kk_fp32, prev_k_mask, ortho
+        prev_qkey, prev_kkey, prev_value, prev_k_fp32, prev_kk_fp32, prev_k_mask, ortho, original_key
     )

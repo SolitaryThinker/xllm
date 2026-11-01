@@ -18,6 +18,8 @@
 #include <transformer_engine/common/common.h>
 #include <transformer_engine/common/util/pybind_helper.h>
 
+namespace xllm::ops { void DefineChunkSoftmaxOp(py::module&); }
+
 namespace xllm {
 
 PYBIND11_MODULE(xllm_extension, m) {
@@ -29,6 +31,9 @@ PYBIND11_MODULE(xllm_extension, m) {
         "Grouped GEMM");
   
   py::module m_ops = m.def_submodule("ops", "Submodule for custom ops.");
+#ifdef XLLM_BLACKWELL
+  ops::DefineChunkSoftmaxOp(m_ops);
+#endif
   ops::DefineAttentionOp(m_ops);
   ops::DefineMultiSegAttentionOp(m_ops);
   ops::DefineEMAHiddenOp(m_ops);

@@ -6,7 +6,7 @@ from torch import Tensor, nn
 import torch.nn.functional as F
 from einops import rearrange, repeat
 
-from .fused_ops import adaptive_working_memory, rejection
+from .fused_ops import adaptive_working_memory, chunk_softmax, rejection
 from .rms_norm import group_rms_norm
 
 
@@ -137,8 +137,11 @@ class AdaptiveWorkingMemory(nn.Module):
                 memory_mask = torch.ne(prev_segment_idx[:, -1], prev_segment_count)
                 memory = memory.masked_fill(memory_mask.view(bsz, 1, 1, 1), value=0.)
                 log_norm_term = log_norm_term.masked_fill(memory_mask.view(bsz, 1, 1), value=float("-inf"))
-            prev_kk = F.softmax(prev_kk_fp32, dim=-1).to(kkey)
-            curr_log_norm_term = torch.logsumexp(prev_kk_fp32, dim=-1)
+            if chunk_softmax.available(prev_kk) and segment_idx is None:
+                prev_kk, curr_log_norm_term = chunk_softmax.decode(prev_kk)
+            else:
+                prev_kk = F.softmax(prev_kk_fp32, dim=-1).to(kkey)
+                curr_log_norm_term = torch.logsumexp(prev_kk_fp32, dim=-1)
             log_norm_term = torch.logsumexp(torch.stack([curr_log_norm_term, log_norm_term], dim=0), dim=0)
             ratio = torch.exp(curr_log_norm_term - log_norm_term).to(memory).unsqueeze(3)
             if self.ortho:
