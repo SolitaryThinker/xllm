@@ -32,45 +32,44 @@ Hardware validation is limited to NVIDIA B300 (sm_103a), PyTorch 2.16.0.dev20261
 
 ## Latency reproduction
 
-The earlier standalone claim was **12.8x**. The integrated public interfaces reproduce a geometric mean
+The optimized public interfaces achieve a geometric mean speedup against original xllm
 of **8.61x** across 27 model cases: **0.428274 ms** for the original
 interfaces and **0.049730 ms** for the new interfaces. Every case below is faster than its original
 counterpart; the smallest measured gain is 2.28x.
 
 These are median CUDA-event latencies over 21 calls with 512 MiB of L2 flushing. The device is kept occupied while
 the host queues each call. Native times include output allocation kernels and saved-statistic/layout conversions;
-event overhead is retained in both native columns. The standalone-claim column describes a preallocated primitive,
-and some claims exclude event/entry overhead. It is not interchangeable with the native-call latency.
+event overhead is retained in both native columns.
 
-| Case | Claimed primitive ms | Reproduced primitive ms | Original native ms | New native ms | Native speedup |
-|---|---:|---:|---:|---:|---:|
-| train-0.9b-fwd | 0.052500 | 0.055424 | 0.767904 | 0.069056 | 11.12x |
-| train-0.9b-bwd | 0.107100 | 0.108640 | 1.556480 | 0.122912 | 12.66x |
-| train-0.9b-bwd-me | 0.119200 | 0.120928 | 11.165696 | 0.124800 | 89.47x |
-| prefill-0.9b-b1 | 0.032700 | 0.034976 | 0.368608 | 0.046112 | 7.99x |
-| prefill-0.9b-b8 | 0.166800 | 0.168032 | 2.423776 | 0.186944 | 12.97x |
-| tail-0.9b-b8 | 0.044500 | 0.049248 | 0.544800 | 0.063488 | 8.58x |
-| decode-0.9b-b1 | — | 0.004192 | 0.016352 | 0.007168 | 2.28x |
-| decode-0.9b-b8 | — | 0.004192 | 0.016416 | 0.007168 | 2.29x |
-| decode-0.9b-b64 | — | 0.004192 | 0.022528 | 0.007168 | 3.14x |
-| train-4b-fwd | 0.079300 | 0.082016 | 1.148928 | 0.094208 | 12.20x |
-| train-4b-bwd | 0.162000 | 0.163936 | 2.144224 | 0.176064 | 12.18x |
-| train-4b-bwd-me | 0.183400 | 0.185280 | 11.562016 | 0.188352 | 61.39x |
-| prefill-4b-b1 | 0.048000 | 0.049248 | 0.566240 | 0.063488 | 8.92x |
-| prefill-4b-b8 | 0.265500 | 0.271456 | 3.941440 | 0.296928 | 13.27x |
-| tail-4b-b8 | 0.066500 | 0.073824 | 0.882656 | 0.087200 | 10.12x |
-| decode-4b-b1 | — | 0.004192 | 0.018464 | 0.007168 | 2.58x |
-| decode-4b-b8 | — | 0.004192 | 0.019456 | 0.007168 | 2.71x |
-| decode-4b-b64 | — | 0.004192 | 0.028608 | 0.007136 | 4.01x |
-| train-7.1b-fwd | 0.116700 | 0.120928 | 1.708096 | 0.135072 | 12.65x |
-| train-7.1b-bwd | 0.242500 | 0.243840 | 2.220128 | 0.258048 | 8.60x |
-| train-7.1b-bwd-me | 0.276100 | 0.278624 | 12.192928 | 0.280576 | 43.46x |
-| prefill-7.1b-b1 | 0.067200 | 0.069536 | 0.847872 | 0.079904 | 10.61x |
-| prefill-7.1b-b8 | 0.418300 | 0.419936 | 6.191104 | 0.458752 | 13.50x |
-| tail-7.1b-b8 | 0.102900 | 0.108640 | 1.381408 | 0.122944 | 11.24x |
-| decode-7.1b-b1 | — | 0.004192 | 0.020448 | 0.007136 | 2.87x |
-| decode-7.1b-b8 | — | 0.004192 | 0.020480 | 0.007104 | 2.88x |
-| decode-7.1b-b64 | — | 0.004192 | 0.035808 | 0.007168 | 5.00x |
+| Case | Original xllm ms | Optimized ms | Speedup |
+| --- | ---: | ---: | ---: |
+| train-0.9b-fwd | 0.767904 | 0.069056 | 11.12x |
+| train-0.9b-bwd | 1.556480 | 0.122912 | 12.66x |
+| train-0.9b-bwd-me | 11.165696 | 0.124800 | 89.47x |
+| prefill-0.9b-b1 | 0.368608 | 0.046112 | 7.99x |
+| prefill-0.9b-b8 | 2.423776 | 0.186944 | 12.97x |
+| tail-0.9b-b8 | 0.544800 | 0.063488 | 8.58x |
+| decode-0.9b-b1 | 0.016352 | 0.007168 | 2.28x |
+| decode-0.9b-b8 | 0.016416 | 0.007168 | 2.29x |
+| decode-0.9b-b64 | 0.022528 | 0.007168 | 3.14x |
+| train-4b-fwd | 1.148928 | 0.094208 | 12.20x |
+| train-4b-bwd | 2.144224 | 0.176064 | 12.18x |
+| train-4b-bwd-me | 11.562016 | 0.188352 | 61.39x |
+| prefill-4b-b1 | 0.566240 | 0.063488 | 8.92x |
+| prefill-4b-b8 | 3.941440 | 0.296928 | 13.27x |
+| tail-4b-b8 | 0.882656 | 0.087200 | 10.12x |
+| decode-4b-b1 | 0.018464 | 0.007168 | 2.58x |
+| decode-4b-b8 | 0.019456 | 0.007168 | 2.71x |
+| decode-4b-b64 | 0.028608 | 0.007136 | 4.01x |
+| train-7.1b-fwd | 1.708096 | 0.135072 | 12.65x |
+| train-7.1b-bwd | 2.220128 | 0.258048 | 8.60x |
+| train-7.1b-bwd-me | 12.192928 | 0.280576 | 43.46x |
+| prefill-7.1b-b1 | 0.847872 | 0.079904 | 10.61x |
+| prefill-7.1b-b8 | 6.191104 | 0.458752 | 13.50x |
+| tail-7.1b-b8 | 1.381408 | 0.122944 | 11.24x |
+| decode-7.1b-b1 | 0.020448 | 0.007136 | 2.87x |
+| decode-7.1b-b8 | 0.020480 | 0.007104 | 2.88x |
+| decode-7.1b-b64 | 0.035808 | 0.007168 | 5.00x |
 
 The JSON companion records raw event latency and CUPTI kernel spans as separate measurements. Decode rows are
 particularly sensitive to a few microseconds of overhead. Timings measure these operations, not full-model throughput.
