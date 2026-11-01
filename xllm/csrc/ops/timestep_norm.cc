@@ -1,3 +1,6 @@
+#ifdef XLLM_BLACKWELL
+#include "timestep_decay_norm/native.h"
+#endif
 #include "ops/timestep_norm.h"
 
 #include <ATen/OpMathType.h>
@@ -649,6 +652,10 @@ GroupTimestepDecayNormFwd(
     double beta2,
     double eps
 ) {
+#ifdef XLLM_BLACKWELL
+  if (blackwell::Supported(X, num_groups) && beta1 > 0 && beta1 < 1 && beta2 > 0 && beta2 < 1) return blackwell::Forward(X, bos_mask, prev_count, prev_mean, prev_var, gamma, beta, padding_mask, num_groups, beta1, beta2, eps, false);
+#endif
+
   if (X.device().type() == torch::kCUDA) {
     return GroupTimestepDecayNormCUDAFwd(X, bos_mask, prev_count, prev_mean, prev_var, gamma, beta, padding_mask, num_groups, beta1, beta2, eps);
   } else {
@@ -733,6 +740,10 @@ GroupTimestepDecayNormBwd(
     double eps,
     bool memory_efficient
 ) {
+#ifdef XLLM_BLACKWELL
+  if (blackwell::Supported(X_or_Y, num_groups) && beta1 > 0 && beta1 < 1 && beta2 > 0 && beta2 < 1) return blackwell::Backward(Y_grad, mean_grad, var_grad, X_or_Y, prev_count, bos_mask, cummean, cumrstd, gamma, beta, padding_mask, num_groups, beta1, beta2, eps, memory_efficient, false);
+#endif
+
   if (X_or_Y.device().type() == torch::kCUDA) {
     return GroupTimestepDecayNormCUDABwd(Y_grad, mean_grad, var_grad, X_or_Y,
                                          prev_count, bos_mask, cummean, cumrstd, gamma, beta,
