@@ -1,0 +1,602 @@
+{
+  "family": "rope",
+  "reference": "independent FP64 math, unrounded outputs",
+  "baseline": "original xllm production implementation; deterministic dispatch selects original GN/TDN",
+  "results": [
+    {
+      "case": "train-h32k8d64-fwd",
+      "outputs": {
+        "out1": {
+          "baseline": {
+            "relative_l2": 0.0016531156589137618,
+            "max_absolute": 0.015613194555044174,
+            "elements": 67108864
+          },
+          "optimized": {
+            "relative_l2": 0.0016531156588401048,
+            "max_absolute": 0.015613194555044174,
+            "elements": 67108864
+          }
+        },
+        "out2": {
+          "baseline": {
+            "relative_l2": 0.0016537745539374077,
+            "max_absolute": 0.015623383456841111,
+            "elements": 16777216
+          },
+          "optimized": {
+            "relative_l2": 0.0016537745540971761,
+            "max_absolute": 0.015623383456841111,
+            "elements": 16777216
+          }
+        }
+      }
+    },
+    {
+      "case": "train-h32k8d64-bwd",
+      "outputs": {
+        "out1": {
+          "baseline": {
+            "relative_l2": 0.0016531555837476903,
+            "max_absolute": 0.0156249376013875,
+            "elements": 67108864
+          },
+          "optimized": {
+            "relative_l2": 0.0016531555837673896,
+            "max_absolute": 0.0156249376013875,
+            "elements": 67108864
+          }
+        }
+      }
+    },
+    {
+      "case": "decode-h32k8d64-b1",
+      "outputs": {
+        "out1": {
+          "baseline": {
+            "relative_l2": 0.0016619202415788432,
+            "max_absolute": 0.007699644658714533,
+            "elements": 2048
+          },
+          "optimized": {
+            "relative_l2": 0.0016619202415788432,
+            "max_absolute": 0.007699644658714533,
+            "elements": 2048
+          }
+        },
+        "out2": {
+          "baseline": {
+            "relative_l2": 0.001555547454278442,
+            "max_absolute": 0.007697190623730421,
+            "elements": 512
+          },
+          "optimized": {
+            "relative_l2": 0.001555547454278442,
+            "max_absolute": 0.007697190623730421,
+            "elements": 512
+          }
+        }
+      }
+    },
+    {
+      "case": "decode-h32k8d64-b64",
+      "outputs": {
+        "out1": {
+          "baseline": {
+            "relative_l2": 0.0016576570999314775,
+            "max_absolute": 0.015580727602355182,
+            "elements": 131072
+          },
+          "optimized": {
+            "relative_l2": 0.0016576570999315616,
+            "max_absolute": 0.015580727602355182,
+            "elements": 131072
+          }
+        },
+        "out2": {
+          "baseline": {
+            "relative_l2": 0.0016439760611533002,
+            "max_absolute": 0.012415526085533202,
+            "elements": 32768
+          },
+          "optimized": {
+            "relative_l2": 0.0016439760611533002,
+            "max_absolute": 0.012415526085533202,
+            "elements": 32768
+          }
+        }
+      }
+    },
+    {
+      "case": "train-h32k8d128-fwd",
+      "outputs": {
+        "out1": {
+          "baseline": {
+            "relative_l2": 0.0016528701830702988,
+            "max_absolute": 0.015618694014847279,
+            "elements": 134217728
+          },
+          "optimized": {
+            "relative_l2": 0.0016528701830548016,
+            "max_absolute": 0.015618694014847279,
+            "elements": 134217728
+          }
+        },
+        "out2": {
+          "baseline": {
+            "relative_l2": 0.0016528468704938267,
+            "max_absolute": 0.01562130861566402,
+            "elements": 33554432
+          },
+          "optimized": {
+            "relative_l2": 0.001652846870525712,
+            "max_absolute": 0.01562130861566402,
+            "elements": 33554432
+          }
+        }
+      }
+    },
+    {
+      "case": "train-h32k8d128-bwd",
+      "outputs": {
+        "out1": {
+          "baseline": {
+            "relative_l2": 0.0016524220535586102,
+            "max_absolute": 0.015623417682945728,
+            "elements": 134217728
+          },
+          "optimized": {
+            "relative_l2": 0.0016524220535400413,
+            "max_absolute": 0.015623417682945728,
+            "elements": 134217728
+          }
+        }
+      }
+    },
+    {
+      "case": "decode-h32k8d128-b1",
+      "outputs": {
+        "out1": {
+          "baseline": {
+            "relative_l2": 0.0016696189406307902,
+            "max_absolute": 0.009327949024736881,
+            "elements": 4096
+          },
+          "optimized": {
+            "relative_l2": 0.0016696189406307902,
+            "max_absolute": 0.009327949024736881,
+            "elements": 4096
+          }
+        },
+        "out2": {
+          "baseline": {
+            "relative_l2": 0.001659635192318501,
+            "max_absolute": 0.00759337842464447,
+            "elements": 1024
+          },
+          "optimized": {
+            "relative_l2": 0.001659635192318501,
+            "max_absolute": 0.00759337842464447,
+            "elements": 1024
+          }
+        }
+      }
+    },
+    {
+      "case": "decode-h32k8d128-b64",
+      "outputs": {
+        "out1": {
+          "baseline": {
+            "relative_l2": 0.0016571673850572302,
+            "max_absolute": 0.014919558074325323,
+            "elements": 262144
+          },
+          "optimized": {
+            "relative_l2": 0.0016571673850446736,
+            "max_absolute": 0.014919558074325323,
+            "elements": 262144
+          }
+        },
+        "out2": {
+          "baseline": {
+            "relative_l2": 0.0016680150122120585,
+            "max_absolute": 0.014864013064652681,
+            "elements": 65536
+          },
+          "optimized": {
+            "relative_l2": 0.0016680150122120585,
+            "max_absolute": 0.014864013064652681,
+            "elements": 65536
+          }
+        }
+      }
+    },
+    {
+      "case": "train-h8k4d256r128-fwd",
+      "outputs": {
+        "out1": {
+          "baseline": {
+            "relative_l2": 0.0016526317497066545,
+            "max_absolute": 0.015615043230354786,
+            "elements": 33554432
+          },
+          "optimized": {
+            "relative_l2": 0.0016526317497095073,
+            "max_absolute": 0.015615043230354786,
+            "elements": 33554432
+          }
+        },
+        "out2": {
+          "baseline": {
+            "relative_l2": 0.0016526983399157548,
+            "max_absolute": 0.015574874356389046,
+            "elements": 16777216
+          },
+          "optimized": {
+            "relative_l2": 0.001652698340075019,
+            "max_absolute": 0.015574874356389046,
+            "elements": 16777216
+          }
+        }
+      }
+    },
+    {
+      "case": "train-h8k4d256r128-bwd",
+      "outputs": {
+        "out1": {
+          "baseline": {
+            "relative_l2": 0.0016523288911376324,
+            "max_absolute": 0.01561427244450897,
+            "elements": 33554432
+          },
+          "optimized": {
+            "relative_l2": 0.0016523288911729308,
+            "max_absolute": 0.01561427244450897,
+            "elements": 33554432
+          }
+        }
+      }
+    },
+    {
+      "case": "decode-h8k4d256r128-b1",
+      "outputs": {
+        "out1": {
+          "baseline": {
+            "relative_l2": 0.0016156377563842999,
+            "max_absolute": 0.007719508663285524,
+            "elements": 1024
+          },
+          "optimized": {
+            "relative_l2": 0.0016156377563842999,
+            "max_absolute": 0.007719508663285524,
+            "elements": 1024
+          }
+        },
+        "out2": {
+          "baseline": {
+            "relative_l2": 0.0016708339306672332,
+            "max_absolute": 0.00759337842464447,
+            "elements": 512
+          },
+          "optimized": {
+            "relative_l2": 0.0016708339306672332,
+            "max_absolute": 0.00759337842464447,
+            "elements": 512
+          }
+        }
+      }
+    },
+    {
+      "case": "decode-h8k4d256r128-b64",
+      "outputs": {
+        "out1": {
+          "baseline": {
+            "relative_l2": 0.0016615513953565741,
+            "max_absolute": 0.014919558074325323,
+            "elements": 65536
+          },
+          "optimized": {
+            "relative_l2": 0.0016615513953565741,
+            "max_absolute": 0.014919558074325323,
+            "elements": 65536
+          }
+        },
+        "out2": {
+          "baseline": {
+            "relative_l2": 0.0016655522369927475,
+            "max_absolute": 0.014864013064652681,
+            "elements": 32768
+          },
+          "optimized": {
+            "relative_l2": 0.0016655522369927475,
+            "max_absolute": 0.014864013064652681,
+            "elements": 32768
+          }
+        }
+      }
+    },
+    {
+      "case": "train-h4k4d256-fwd",
+      "outputs": {
+        "out1": {
+          "baseline": {
+            "relative_l2": 0.0016520305834207935,
+            "max_absolute": 0.015624735402525403,
+            "elements": 33554432
+          },
+          "optimized": {
+            "relative_l2": 0.001652030583432535,
+            "max_absolute": 0.015624735402525403,
+            "elements": 33554432
+          }
+        },
+        "out2": {
+          "baseline": {
+            "relative_l2": 0.0016522756590239345,
+            "max_absolute": 0.015624362975358963,
+            "elements": 33554432
+          },
+          "optimized": {
+            "relative_l2": 0.0016522756589878469,
+            "max_absolute": 0.015624362975358963,
+            "elements": 33554432
+          }
+        }
+      }
+    },
+    {
+      "case": "train-h4k4d256-bwd",
+      "outputs": {
+        "out1": {
+          "baseline": {
+            "relative_l2": 0.0016521951597703532,
+            "max_absolute": 0.015621764585375786,
+            "elements": 33554432
+          },
+          "optimized": {
+            "relative_l2": 0.001652195159745643,
+            "max_absolute": 0.015621764585375786,
+            "elements": 33554432
+          }
+        }
+      }
+    },
+    {
+      "case": "decode-h4k4d256-b1",
+      "outputs": {
+        "out1": {
+          "baseline": {
+            "relative_l2": 0.0016830481280192865,
+            "max_absolute": 0.007738074287772179,
+            "elements": 1024
+          },
+          "optimized": {
+            "relative_l2": 0.0016830481280192865,
+            "max_absolute": 0.007738074287772179,
+            "elements": 1024
+          }
+        },
+        "out2": {
+          "baseline": {
+            "relative_l2": 0.0016348300815311977,
+            "max_absolute": 0.007491216209018603,
+            "elements": 1024
+          },
+          "optimized": {
+            "relative_l2": 0.0016348300815311977,
+            "max_absolute": 0.007491216209018603,
+            "elements": 1024
+          }
+        }
+      }
+    },
+    {
+      "case": "decode-h4k4d256-b64",
+      "outputs": {
+        "out1": {
+          "baseline": {
+            "relative_l2": 0.001657705134852361,
+            "max_absolute": 0.012714146636426449,
+            "elements": 65536
+          },
+          "optimized": {
+            "relative_l2": 0.0016577051356598074,
+            "max_absolute": 0.012714146636426449,
+            "elements": 65536
+          }
+        },
+        "out2": {
+          "baseline": {
+            "relative_l2": 0.001655573746635196,
+            "max_absolute": 0.012214768677949905,
+            "elements": 65536
+          },
+          "optimized": {
+            "relative_l2": 0.001655573746527255,
+            "max_absolute": 0.012214768677949905,
+            "elements": 65536
+          }
+        }
+      }
+    },
+    {
+      "case": "prefill-h32k8d128-start8192",
+      "outputs": {
+        "out1": {
+          "baseline": {
+            "relative_l2": 0.0016599281108628237,
+            "max_absolute": 0.01562020555138588,
+            "elements": 33554432
+          },
+          "optimized": {
+            "relative_l2": 0.001659928111003322,
+            "max_absolute": 0.01562020555138588,
+            "elements": 33554432
+          }
+        },
+        "out2": {
+          "baseline": {
+            "relative_l2": 0.0016598134711175144,
+            "max_absolute": 0.015623746439814568,
+            "elements": 8388608
+          },
+          "optimized": {
+            "relative_l2": 0.0016598134710114662,
+            "max_absolute": 0.015623746439814568,
+            "elements": 8388608
+          }
+        }
+      }
+    },
+    {
+      "case": "prefill-h32k8d128",
+      "outputs": {
+        "out1": {
+          "baseline": {
+            "relative_l2": 0.001656238171593296,
+            "max_absolute": 0.015618057004758157,
+            "elements": 67108864
+          },
+          "optimized": {
+            "relative_l2": 0.001656238171615057,
+            "max_absolute": 0.015618057004758157,
+            "elements": 67108864
+          }
+        },
+        "out2": {
+          "baseline": {
+            "relative_l2": 0.0016565171739367321,
+            "max_absolute": 0.015606850385665894,
+            "elements": 16777216
+          },
+          "optimized": {
+            "relative_l2": 0.0016565171743226203,
+            "max_absolute": 0.015606850385665894,
+            "elements": 16777216
+          }
+        }
+      }
+    },
+    {
+      "case": "prefill-h8k4d256r128",
+      "outputs": {
+        "out1": {
+          "baseline": {
+            "relative_l2": 0.0016563622592978603,
+            "max_absolute": 0.015618670731782913,
+            "elements": 16777216
+          },
+          "optimized": {
+            "relative_l2": 0.001656362259143611,
+            "max_absolute": 0.015618670731782913,
+            "elements": 16777216
+          }
+        },
+        "out2": {
+          "baseline": {
+            "relative_l2": 0.0016555622854250484,
+            "max_absolute": 0.015552922035567462,
+            "elements": 8388608
+          },
+          "optimized": {
+            "relative_l2": 0.0016555622856704176,
+            "max_absolute": 0.015552922035567462,
+            "elements": 8388608
+          }
+        }
+      }
+    },
+    {
+      "case": "prefill-h4k4d256",
+      "outputs": {
+        "out1": {
+          "baseline": {
+            "relative_l2": 0.001655536852756331,
+            "max_absolute": 0.015624735402525403,
+            "elements": 16777216
+          },
+          "optimized": {
+            "relative_l2": 0.001655536852509098,
+            "max_absolute": 0.015624735402525403,
+            "elements": 16777216
+          }
+        },
+        "out2": {
+          "baseline": {
+            "relative_l2": 0.0016561749791297606,
+            "max_absolute": 0.015624469349859282,
+            "elements": 16777216
+          },
+          "optimized": {
+            "relative_l2": 0.001656174979141655,
+            "max_absolute": 0.015624469349859282,
+            "elements": 16777216
+          }
+        }
+      }
+    },
+    {
+      "case": "unbind-q-h32k8d128-fwd",
+      "outputs": {
+        "out1": {
+          "baseline": {
+            "relative_l2": 0.0016526453121410334,
+            "max_absolute": 0.015623343642801046,
+            "elements": 134217728
+          },
+          "optimized": {
+            "relative_l2": 0.0016526453120812338,
+            "max_absolute": 0.015623343642801046,
+            "elements": 134217728
+          }
+        },
+        "out2": {
+          "baseline": {
+            "relative_l2": 0.0016524919885524763,
+            "max_absolute": 0.01560152624733746,
+            "elements": 33554432
+          },
+          "optimized": {
+            "relative_l2": 0.0016524919888736233,
+            "max_absolute": 0.01560152624733746,
+            "elements": 33554432
+          }
+        }
+      }
+    },
+    {
+      "case": "unbind-kq-h32k8d128-fwd",
+      "outputs": {
+        "out1": {
+          "baseline": {
+            "relative_l2": 0.0016526608209626575,
+            "max_absolute": 0.01562294812174514,
+            "elements": 134217728
+          },
+          "optimized": {
+            "relative_l2": 0.0016526608210048113,
+            "max_absolute": 0.01562294812174514,
+            "elements": 134217728
+          }
+        }
+      }
+    },
+    {
+      "case": "bhld-h32k8d128-bwd",
+      "outputs": {
+        "out1": {
+          "baseline": {
+            "relative_l2": 0.0016527944277921819,
+            "max_absolute": 0.015623216517269611,
+            "elements": 134217728
+          },
+          "optimized": {
+            "relative_l2": 0.0016527944278296805,
+            "max_absolute": 0.015623216517269611,
+            "elements": 134217728
+          }
+        }
+      }
+    }
+  ]
+}
