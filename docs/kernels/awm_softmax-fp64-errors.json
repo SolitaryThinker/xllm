@@ -1,0 +1,679 @@
+{
+  "family": "awm_softmax",
+  "reference": "independent FP64 math, unrounded outputs",
+  "baseline": "original xllm production implementation; deterministic dispatch selects original GN/TDN",
+  "results": [
+    {
+      "case": "train_fwd_4x256_b1_l8192",
+      "outputs": {
+        "kkey": {
+          "baseline": {
+            "relative_l2": 0.001620988806303537,
+            "max_absolute": 0.0009778536340449007,
+            "elements": 8388608
+          },
+          "optimized": {
+            "relative_l2": 0.001620989095047419,
+            "max_absolute": 0.0009778536340449007,
+            "elements": 8388608
+          }
+        },
+        "lse_out": {
+          "baseline": {
+            "relative_l2": 2.8441948087541806e-08,
+            "max_absolute": 6.410777615428742e-07,
+            "elements": 2048
+          },
+          "optimized": {
+            "relative_l2": 3.035059989773806e-08,
+            "max_absolute": 7.215542048299994e-07,
+            "elements": 2048
+          }
+        }
+      }
+    },
+    {
+      "case": "train_bwd_4x256_b1_l8192",
+      "outputs": {
+        "dkey": {
+          "baseline": {
+            "relative_l2": 0.0024014421692095463,
+            "max_absolute": 0.0006177674004160527,
+            "elements": 8388608
+          },
+          "optimized": {
+            "relative_l2": 0.00163930165668686,
+            "max_absolute": 0.0005932726527820842,
+            "elements": 8388608
+          }
+        }
+      }
+    },
+    {
+      "case": "train_fwd_4x256_b4_l8192",
+      "outputs": {
+        "kkey": {
+          "baseline": {
+            "relative_l2": 0.001644364246709512,
+            "max_absolute": 0.0017022604894938453,
+            "elements": 33554432
+          },
+          "optimized": {
+            "relative_l2": 0.0016443642979794522,
+            "max_absolute": 0.0017022604894938453,
+            "elements": 33554432
+          }
+        },
+        "lse_out": {
+          "baseline": {
+            "relative_l2": 2.997192981986979e-08,
+            "max_absolute": 7.783198547883785e-07,
+            "elements": 8192
+          },
+          "optimized": {
+            "relative_l2": 3.133730074859472e-08,
+            "max_absolute": 8.82913340660707e-07,
+            "elements": 8192
+          }
+        }
+      }
+    },
+    {
+      "case": "train_bwd_4x256_b4_l8192",
+      "outputs": {
+        "dkey": {
+          "baseline": {
+            "relative_l2": 0.002445793656014224,
+            "max_absolute": 0.0029604563733067746,
+            "elements": 33554432
+          },
+          "optimized": {
+            "relative_l2": 0.001625375442584374,
+            "max_absolute": 0.0012980342759261188,
+            "elements": 33554432
+          }
+        }
+      }
+    },
+    {
+      "case": "train_fwd_4x256_b1_l16384",
+      "outputs": {
+        "kkey": {
+          "baseline": {
+            "relative_l2": 0.0016671870753223333,
+            "max_absolute": 0.0019071295841027736,
+            "elements": 16777216
+          },
+          "optimized": {
+            "relative_l2": 0.0016671870910831728,
+            "max_absolute": 0.0019071295841027736,
+            "elements": 16777216
+          }
+        },
+        "lse_out": {
+          "baseline": {
+            "relative_l2": 3.447152831482338e-08,
+            "max_absolute": 7.96506697042787e-07,
+            "elements": 4096
+          },
+          "optimized": {
+            "relative_l2": 3.5766881004380726e-08,
+            "max_absolute": 8.449222423934089e-07,
+            "elements": 4096
+          }
+        }
+      }
+    },
+    {
+      "case": "train_bwd_4x256_b1_l16384",
+      "outputs": {
+        "dkey": {
+          "baseline": {
+            "relative_l2": 0.0024909720260845635,
+            "max_absolute": 0.003125253263339789,
+            "elements": 16777216
+          },
+          "optimized": {
+            "relative_l2": 0.0016620178036498346,
+            "max_absolute": 0.00279903123601688,
+            "elements": 16777216
+          }
+        }
+      }
+    },
+    {
+      "case": "prefill_4x256_b1_l16384",
+      "outputs": {
+        "kkey": {
+          "baseline": {
+            "relative_l2": 0.0016465382864402237,
+            "max_absolute": 0.0005160092224368307,
+            "elements": 16777216
+          },
+          "optimized": {
+            "relative_l2": 0.001646538305980257,
+            "max_absolute": 0.0005160092224368307,
+            "elements": 16777216
+          }
+        },
+        "lse_out": {
+          "baseline": {
+            "relative_l2": 3.7004909373709785e-08,
+            "max_absolute": 8.004382046067349e-07,
+            "elements": 4096
+          },
+          "optimized": {
+            "relative_l2": 3.7607791374164e-08,
+            "max_absolute": 8.181960797770671e-07,
+            "elements": 4096
+          }
+        }
+      }
+    },
+    {
+      "case": "prefill_4x256_b1_l16384_prev",
+      "outputs": {
+        "kkey": {
+          "baseline": {
+            "relative_l2": 0.0016989667907787954,
+            "max_absolute": 0.001438939965210273,
+            "elements": 16777216
+          },
+          "optimized": {
+            "relative_l2": 0.0016989668211345136,
+            "max_absolute": 0.001438939965210273,
+            "elements": 16777216
+          }
+        },
+        "lse_out": {
+          "baseline": {
+            "relative_l2": 3.619743424389483e-08,
+            "max_absolute": 8.349991986733585e-07,
+            "elements": 4096
+          },
+          "optimized": {
+            "relative_l2": 3.6562703696521204e-08,
+            "max_absolute": 8.409884095783582e-07,
+            "elements": 4096
+          }
+        },
+        "prev_kkey": {
+          "baseline": {
+            "relative_l2": 0.001689094542634706,
+            "max_absolute": 0.0004364025168695773,
+            "elements": 4194304
+          },
+          "optimized": {
+            "relative_l2": 0.001689094562030697,
+            "max_absolute": 0.0004364025168695773,
+            "elements": 4194304
+          }
+        }
+      }
+    },
+    {
+      "case": "prefill_4x256_b1_l4096_prev",
+      "outputs": {
+        "kkey": {
+          "baseline": {
+            "relative_l2": 0.0016727325866654483,
+            "max_absolute": 0.0004781450569754375,
+            "elements": 4194304
+          },
+          "optimized": {
+            "relative_l2": 0.001672732609891371,
+            "max_absolute": 0.0004781450569754375,
+            "elements": 4194304
+          }
+        },
+        "lse_out": {
+          "baseline": {
+            "relative_l2": 3.585674501884075e-08,
+            "max_absolute": 7.76323435758286e-07,
+            "elements": 1024
+          },
+          "optimized": {
+            "relative_l2": 3.6430353687254706e-08,
+            "max_absolute": 8.353444087561002e-07,
+            "elements": 1024
+          }
+        },
+        "prev_kkey": {
+          "baseline": {
+            "relative_l2": 0.001662926922093887,
+            "max_absolute": 0.0004344593670863317,
+            "elements": 4194304
+          },
+          "optimized": {
+            "relative_l2": 0.0016629269416479251,
+            "max_absolute": 0.0004344593670863317,
+            "elements": 4194304
+          }
+        }
+      }
+    },
+    {
+      "case": "prefill_4x256_b8_l16384",
+      "outputs": {
+        "kkey": {
+          "baseline": {
+            "relative_l2": 0.0016513199796036738,
+            "max_absolute": 0.0009730723783675232,
+            "elements": 134217728
+          },
+          "optimized": {
+            "relative_l2": 0.0016513200063791506,
+            "max_absolute": 0.0009730723783675232,
+            "elements": 134217728
+          }
+        },
+        "lse_out": {
+          "baseline": {
+            "relative_l2": 3.656121261627179e-08,
+            "max_absolute": 8.553731554172828e-07,
+            "elements": 32768
+          },
+          "optimized": {
+            "relative_l2": 3.745494832976078e-08,
+            "max_absolute": 9.275958614551882e-07,
+            "elements": 32768
+          }
+        }
+      }
+    },
+    {
+      "case": "decode_4x256_b1",
+      "outputs": {
+        "kkey": {
+          "baseline": {
+            "relative_l2": 0.001649697741648745,
+            "max_absolute": 0.0004616957513573494,
+            "elements": 4194304
+          },
+          "optimized": {
+            "relative_l2": 0.001649697759557588,
+            "max_absolute": 0.0004616957513573494,
+            "elements": 4194304
+          }
+        },
+        "lse_out": {
+          "baseline": {
+            "relative_l2": 3.678200427828195e-08,
+            "max_absolute": 7.943166924206935e-07,
+            "elements": 1024
+          },
+          "optimized": {
+            "relative_l2": 3.7090514238285034e-08,
+            "max_absolute": 7.94830791406298e-07,
+            "elements": 1024
+          }
+        }
+      }
+    },
+    {
+      "case": "decode_4x256_b8",
+      "outputs": {
+        "kkey": {
+          "baseline": {
+            "relative_l2": 0.0016471625240582178,
+            "max_absolute": 0.0008311677389979955,
+            "elements": 33554432
+          },
+          "optimized": {
+            "relative_l2": 0.00164716256208044,
+            "max_absolute": 0.0008311677389979955,
+            "elements": 33554432
+          }
+        },
+        "lse_out": {
+          "baseline": {
+            "relative_l2": 3.7144113392594905e-08,
+            "max_absolute": 8.26712199142321e-07,
+            "elements": 8192
+          },
+          "optimized": {
+            "relative_l2": 3.754143014899549e-08,
+            "max_absolute": 8.798276773802627e-07,
+            "elements": 8192
+          }
+        }
+      }
+    },
+    {
+      "case": "train_fwd_8x128_b1_l8192",
+      "outputs": {
+        "kkey": {
+          "baseline": {
+            "relative_l2": 0.0016483739802945897,
+            "max_absolute": 0.0008204607563746524,
+            "elements": 8388608
+          },
+          "optimized": {
+            "relative_l2": 0.001648373991691201,
+            "max_absolute": 0.0008204607563746524,
+            "elements": 8388608
+          }
+        },
+        "lse_out": {
+          "baseline": {
+            "relative_l2": 3.077420634365971e-08,
+            "max_absolute": 7.185352011163104e-07,
+            "elements": 2048
+          },
+          "optimized": {
+            "relative_l2": 3.157557314511085e-08,
+            "max_absolute": 7.799460846058537e-07,
+            "elements": 2048
+          }
+        }
+      }
+    },
+    {
+      "case": "train_bwd_8x128_b1_l8192",
+      "outputs": {
+        "dkey": {
+          "baseline": {
+            "relative_l2": 0.002346725215668105,
+            "max_absolute": 0.0026144417147155874,
+            "elements": 8388608
+          },
+          "optimized": {
+            "relative_l2": 0.0016483792407841484,
+            "max_absolute": 0.0012918082852844126,
+            "elements": 8388608
+          }
+        }
+      }
+    },
+    {
+      "case": "train_fwd_8x128_b4_l8192",
+      "outputs": {
+        "kkey": {
+          "baseline": {
+            "relative_l2": 0.001656941232249408,
+            "max_absolute": 0.0010948674852163665,
+            "elements": 33554432
+          },
+          "optimized": {
+            "relative_l2": 0.0016569414240256422,
+            "max_absolute": 0.0010948674852163665,
+            "elements": 33554432
+          }
+        },
+        "lse_out": {
+          "baseline": {
+            "relative_l2": 3.0893478778281325e-08,
+            "max_absolute": 7.899246217135669e-07,
+            "elements": 8192
+          },
+          "optimized": {
+            "relative_l2": 3.1611334071645016e-08,
+            "max_absolute": 7.760339890694468e-07,
+            "elements": 8192
+          }
+        }
+      }
+    },
+    {
+      "case": "train_bwd_8x128_b4_l8192",
+      "outputs": {
+        "dkey": {
+          "baseline": {
+            "relative_l2": 0.0023911894365158007,
+            "max_absolute": 0.003260996035605146,
+            "elements": 33554432
+          },
+          "optimized": {
+            "relative_l2": 0.0016476407955847224,
+            "max_absolute": 0.003260996035605146,
+            "elements": 33554432
+          }
+        }
+      }
+    },
+    {
+      "case": "train_fwd_8x128_b1_l16384",
+      "outputs": {
+        "kkey": {
+          "baseline": {
+            "relative_l2": 0.0016171872942822411,
+            "max_absolute": 0.0009753689322362091,
+            "elements": 16777216
+          },
+          "optimized": {
+            "relative_l2": 0.001617187309513254,
+            "max_absolute": 0.0009753689322362091,
+            "elements": 16777216
+          }
+        },
+        "lse_out": {
+          "baseline": {
+            "relative_l2": 3.221504219172096e-08,
+            "max_absolute": 7.531642509661651e-07,
+            "elements": 4096
+          },
+          "optimized": {
+            "relative_l2": 3.355059177830989e-08,
+            "max_absolute": 8.28971737476536e-07,
+            "elements": 4096
+          }
+        }
+      }
+    },
+    {
+      "case": "train_bwd_8x128_b1_l16384",
+      "outputs": {
+        "dkey": {
+          "baseline": {
+            "relative_l2": 0.0023320704499937956,
+            "max_absolute": 0.0023341688539000316,
+            "elements": 16777216
+          },
+          "optimized": {
+            "relative_l2": 0.0016386840876348482,
+            "max_absolute": 0.0018415155152107232,
+            "elements": 16777216
+          }
+        }
+      }
+    },
+    {
+      "case": "prefill_8x128_b1_l16384",
+      "outputs": {
+        "kkey": {
+          "baseline": {
+            "relative_l2": 0.0016749767678660664,
+            "max_absolute": 0.0009524243391771381,
+            "elements": 16777216
+          },
+          "optimized": {
+            "relative_l2": 0.0016749767874203103,
+            "max_absolute": 0.0009524243391771381,
+            "elements": 16777216
+          }
+        },
+        "lse_out": {
+          "baseline": {
+            "relative_l2": 3.6584535288121904e-08,
+            "max_absolute": 7.8982133544514e-07,
+            "elements": 4096
+          },
+          "optimized": {
+            "relative_l2": 3.6771405929368824e-08,
+            "max_absolute": 8.55760490026114e-07,
+            "elements": 4096
+          }
+        }
+      }
+    },
+    {
+      "case": "prefill_8x128_b1_l16384_prev",
+      "outputs": {
+        "kkey": {
+          "baseline": {
+            "relative_l2": 0.0016347810207275046,
+            "max_absolute": 0.00048579464712283915,
+            "elements": 16777216
+          },
+          "optimized": {
+            "relative_l2": 0.0016347810316003119,
+            "max_absolute": 0.00048579464712283915,
+            "elements": 16777216
+          }
+        },
+        "lse_out": {
+          "baseline": {
+            "relative_l2": 3.616170955383545e-08,
+            "max_absolute": 8.264016244652339e-07,
+            "elements": 4096
+          },
+          "optimized": {
+            "relative_l2": 3.7232095280188274e-08,
+            "max_absolute": 8.727580578238303e-07,
+            "elements": 4096
+          }
+        },
+        "prev_kkey": {
+          "baseline": {
+            "relative_l2": 0.0016397121261236389,
+            "max_absolute": 0.0007810741485977934,
+            "elements": 4194304
+          },
+          "optimized": {
+            "relative_l2": 0.0016397121641395195,
+            "max_absolute": 0.0007810741485977934,
+            "elements": 4194304
+          }
+        }
+      }
+    },
+    {
+      "case": "prefill_8x128_b1_l4096_prev",
+      "outputs": {
+        "kkey": {
+          "baseline": {
+            "relative_l2": 0.0016437279626716217,
+            "max_absolute": 0.0004788606103470483,
+            "elements": 4194304
+          },
+          "optimized": {
+            "relative_l2": 0.0016437279732428851,
+            "max_absolute": 0.0004788606103470483,
+            "elements": 4194304
+          }
+        },
+        "lse_out": {
+          "baseline": {
+            "relative_l2": 3.6391472467500125e-08,
+            "max_absolute": 8.02850657066756e-07,
+            "elements": 1024
+          },
+          "optimized": {
+            "relative_l2": 3.624831772012874e-08,
+            "max_absolute": 7.963217427686686e-07,
+            "elements": 1024
+          }
+        },
+        "prev_kkey": {
+          "baseline": {
+            "relative_l2": 0.0016319546691547985,
+            "max_absolute": 0.00044828846251229737,
+            "elements": 4194304
+          },
+          "optimized": {
+            "relative_l2": 0.0016319547084130642,
+            "max_absolute": 0.00044828846251229737,
+            "elements": 4194304
+          }
+        }
+      }
+    },
+    {
+      "case": "prefill_8x128_b8_l16384",
+      "outputs": {
+        "kkey": {
+          "baseline": {
+            "relative_l2": 0.0016727044744345363,
+            "max_absolute": 0.0018779403554541885,
+            "elements": 134217728
+          },
+          "optimized": {
+            "relative_l2": 0.001672704513456049,
+            "max_absolute": 0.0018779403554541885,
+            "elements": 134217728
+          }
+        },
+        "lse_out": {
+          "baseline": {
+            "relative_l2": 3.691382423627306e-08,
+            "max_absolute": 8.423666706391941e-07,
+            "elements": 32768
+          },
+          "optimized": {
+            "relative_l2": 3.7477979035949974e-08,
+            "max_absolute": 8.777278228677687e-07,
+            "elements": 32768
+          }
+        }
+      }
+    },
+    {
+      "case": "decode_8x128_b1",
+      "outputs": {
+        "kkey": {
+          "baseline": {
+            "relative_l2": 0.001721437135815453,
+            "max_absolute": 0.00047049559552819753,
+            "elements": 4194304
+          },
+          "optimized": {
+            "relative_l2": 0.0017214371549762934,
+            "max_absolute": 0.00047049559552819753,
+            "elements": 4194304
+          }
+        },
+        "lse_out": {
+          "baseline": {
+            "relative_l2": 3.6392955717151055e-08,
+            "max_absolute": 7.60754030437738e-07,
+            "elements": 1024
+          },
+          "optimized": {
+            "relative_l2": 3.734479187326106e-08,
+            "max_absolute": 8.748610760278552e-07,
+            "elements": 1024
+          }
+        }
+      }
+    },
+    {
+      "case": "decode_8x128_b8",
+      "outputs": {
+        "kkey": {
+          "baseline": {
+            "relative_l2": 0.001663573037092339,
+            "max_absolute": 0.0010911482602905531,
+            "elements": 33554432
+          },
+          "optimized": {
+            "relative_l2": 0.0016635730569672731,
+            "max_absolute": 0.0010911482602905531,
+            "elements": 33554432
+          }
+        },
+        "lse_out": {
+          "baseline": {
+            "relative_l2": 3.702063349123111e-08,
+            "max_absolute": 8.264024558002347e-07,
+            "elements": 8192
+          },
+          "optimized": {
+            "relative_l2": 3.774304634014923e-08,
+            "max_absolute": 8.655707741667129e-07,
+            "elements": 8192
+          }
+        }
+      }
+    }
+  ]
+}

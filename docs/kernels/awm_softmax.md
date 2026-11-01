@@ -98,3 +98,23 @@ trained together with nonzero AWM gradients and same-binary repeat controls.
 
 See [TDN and AWM precision](precision.md) for original-versus-optimized accuracy
 and measured FP32 performance tradeoffs.
+
+## Original and optimized errors against unrounded FP64 math
+
+The table reports the largest tensor relative L2 error across the model cases for
+each output: `norm(actual - reference) / norm(reference)`. Both implementations
+use identical inputs and are measured against independent, unrounded FP64 math.
+These errors include output rounding; the earlier numerical-agreement table uses
+a reference rounded to the output dtype and therefore measures a different error.
+Input quantization and RoPE angle-table generation are outside this comparison.
+Backward comparisons use each operation's specified inputs and saved statistics.
+
+| Output | Original relative L2 error (%) | Optimized relative L2 error (%) |
+|---|---:|---:|
+| kkey | 0.17214371 | 0.17214372 |
+| lse_out | 3.7144113e-06 | 3.7743046e-06 |
+| dkey | 0.2490972 | 0.16620178 |
+| prev_kkey | 0.16890945 | 0.16890946 |
+
+Per-case outputs, maximum absolute errors, and relative L2 errors are recorded in
+[awm_softmax-fp64-errors.json](awm_softmax-fp64-errors.json).
