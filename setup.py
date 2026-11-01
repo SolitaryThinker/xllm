@@ -58,6 +58,19 @@ CSRCS = [
     os.path.join(PATH, "xllm/csrc/transformer_engine/common/common.cu")
 ]
 
+# Blackwell kernels use architecture-specific instructions; mixed or older targets keep the existing CUDA ops.
+_archs = os.environ.get("TORCH_CUDA_ARCH_LIST", "").replace(";", " ").split()
+_build_blackwell = bool(_archs) and all(a.rstrip("a").split(".")[0].isdigit() and
+                                      int(a.rstrip("a").split(".")[0]) >= 10 for a in _archs)
+if not _archs and torch.cuda.is_available():
+    _build_blackwell = all(torch.cuda.get_device_capability(i)[0] >= 10
+                           for i in range(torch.cuda.device_count()))
+if _build_blackwell:
+    from glob import glob
+    CSRCS += sorted(glob(os.path.join(PATH, "xllm/csrc/ops/group_norm", "*.cu")))
+    CSRCS += sorted(glob(os.path.join(PATH, "xllm/csrc/ops/group_norm", "*.cpp")))
+
+
 INCLUDE_DIRS = [
     os.path.join(PATH, "xllm/csrc"),
     os.path.join(PATH, "xllm/csrc/transformer_engine"),
@@ -67,6 +80,9 @@ CXX_FLAGS = [
     "-O3",
     f"-std={get_torch_cxx_standard()}",
 ]
+
+if _build_blackwell:
+    CXX_FLAGS.append("-DXLLM_BLACKWELL")
 
 NVCC_FLAGS = [
     "--expt-relaxed-constexpr",

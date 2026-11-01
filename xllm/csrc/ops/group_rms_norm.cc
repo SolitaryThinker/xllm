@@ -1,3 +1,6 @@
+#ifdef XLLM_BLACKWELL
+#include "group_norm/native.h"
+#endif
 #include "group_rms_norm.h"
 
 namespace xllm {
@@ -6,6 +9,9 @@ namespace ops {
 std::tuple<torch::Tensor, torch::Tensor> GroupRMSNormFwdAffine(
     const torch::Tensor& x, int64_t num_channels, int64_t num_groups,
     const torch::Tensor& gamma, double eps) {
+#ifdef XLLM_BLACKWELL
+  if (blackwell::Supported(x)) return blackwell::GroupRMSNormFwdAffine(x, num_channels, num_groups, gamma, eps);
+#endif
   TORCH_CHECK(x.device().type() == torch::kCUDA);
   TORCH_CHECK(gamma.device().type() == torch::kCUDA);
   return GroupRMSNormCUDAFwdAffine(x, num_channels, num_groups, gamma, eps);
@@ -13,6 +19,9 @@ std::tuple<torch::Tensor, torch::Tensor> GroupRMSNormFwdAffine(
 
 std::tuple<torch::Tensor, torch::Tensor> GroupRMSNormFwd(
     const torch::Tensor& x, int64_t num_channels, int64_t num_groups, double eps) {
+#ifdef XLLM_BLACKWELL
+  if (blackwell::Supported(x)) return blackwell::GroupRMSNormFwd(x, num_channels, num_groups, eps);
+#endif
   TORCH_CHECK(x.device().type() == torch::kCUDA);
   return GroupRMSNormCUDAFwd(x, num_channels, num_groups, eps);
 }
@@ -22,6 +31,9 @@ std::tuple<torch::Tensor, torch::Tensor> GroupRMSNormBwdAffine(
     int64_t num_channels, int64_t num_groups,
     const torch::Tensor& rstd, const torch::Tensor& gamma,
     bool memory_efficient) {
+#ifdef XLLM_BLACKWELL
+  if (blackwell::Supported(x)) return blackwell::GroupRMSNormBwdAffine(y_grad, x, num_channels, num_groups, rstd, gamma, memory_efficient);
+#endif
   TORCH_CHECK(y_grad.device().type() == torch::kCUDA);
   TORCH_CHECK(x.device().type() == torch::kCUDA);
   TORCH_CHECK(rstd.device().type() == torch::kCUDA);
@@ -33,6 +45,9 @@ torch::Tensor GroupRMSNormBwd(
     const torch::Tensor& y_grad, const torch::Tensor& x,
     int64_t num_channels, int64_t num_groups,
     const torch::Tensor& rstd, bool memory_efficient) {
+#ifdef XLLM_BLACKWELL
+  if (blackwell::Supported(x)) return blackwell::GroupRMSNormBwd(y_grad, x, num_channels, num_groups, rstd, memory_efficient);
+#endif
   TORCH_CHECK(y_grad.device().type() == torch::kCUDA);
   TORCH_CHECK(x.device().type() == torch::kCUDA);
   TORCH_CHECK(rstd.device().type() == torch::kCUDA);

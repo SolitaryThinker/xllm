@@ -607,7 +607,7 @@ std::tuple<torch::Tensor, torch::Tensor, torch::Tensor> GroupLayerNormCUDAFwdAff
     const torch::Tensor& x, int64_t num_channels, int64_t num_groups,
     const torch::Tensor& gamma, const torch::Tensor& beta, double eps) {
 
-  TORCH_CHECK(num_groups >= 1 && num_groups <= 32);
+  TORCH_CHECK(num_groups >= 1);
   TORCH_CHECK(num_channels % num_groups == 0);
   TORCH_CHECK(x.dim() == 3);
   const int64_t channels_per_group = num_channels / num_groups;
@@ -638,7 +638,7 @@ std::tuple<torch::Tensor, torch::Tensor, torch::Tensor> GroupLayerNormCUDAFwdAff
 std::tuple<torch::Tensor, torch::Tensor, torch::Tensor> GroupLayerNormCUDAFwd(
     const torch::Tensor& x, int64_t num_channels, int64_t num_groups, double eps) {
 
-  TORCH_CHECK(num_groups >= 1 && num_groups <= 32);
+  TORCH_CHECK(num_groups >= 1);
   TORCH_CHECK(num_channels % num_groups == 0);
   TORCH_CHECK(x.dim() == 3);
   const int64_t channels_per_group = num_channels / num_groups;
@@ -672,7 +672,7 @@ std::tuple<torch::Tensor, torch::Tensor, torch::Tensor> GroupLayerNormCUDABwdAff
     const torch::Tensor& gamma, const torch::Tensor& beta,
     bool memory_efficient) {
 
-  TORCH_CHECK(num_groups >= 1 && num_groups <= 32);
+  TORCH_CHECK(num_groups >= 1);
   TORCH_CHECK(num_channels % num_groups == 0);
   TORCH_CHECK(x.dim() == 3);
 
@@ -706,7 +706,7 @@ torch::Tensor GroupLayerNormCUDABwd(
     const torch::Tensor& mean, const torch::Tensor& rstd,
     bool memory_efficient) {
 
-  TORCH_CHECK(num_groups >= 1 && num_groups <= 32);
+  TORCH_CHECK(num_groups >= 1);
   TORCH_CHECK(num_channels % num_groups == 0);
   TORCH_CHECK(x.dim() == 3);
 

@@ -520,7 +520,7 @@ std::tuple<torch::Tensor, torch::Tensor> GroupRMSNormCUDAFwdAffine(
     const torch::Tensor& x, int64_t num_channels, int64_t num_groups,
     const torch::Tensor& gamma, double eps) {
 
-  TORCH_CHECK(num_groups >= 1 && num_groups <= 32);
+  TORCH_CHECK(num_groups >= 1);
   TORCH_CHECK(num_channels % num_groups == 0);
   TORCH_CHECK(x.dim() == 3);
   const int64_t channels_per_group = num_channels / num_groups;
@@ -545,7 +545,7 @@ std::tuple<torch::Tensor, torch::Tensor> GroupRMSNormCUDAFwdAffine(
 std::tuple<torch::Tensor, torch::Tensor> GroupRMSNormCUDAFwd(
     const torch::Tensor& x, int64_t num_channels, int64_t num_groups, double eps) {
 
-  TORCH_CHECK(num_groups >= 1 && num_groups <= 32);
+  TORCH_CHECK(num_groups >= 1);
   TORCH_CHECK(num_channels % num_groups == 0);
   TORCH_CHECK(x.dim() == 3);
   const int64_t channels_per_group = num_channels / num_groups;
@@ -572,7 +572,7 @@ std::tuple<torch::Tensor, torch::Tensor> GroupRMSNormCUDABwdAffine(
     const torch::Tensor& rstd, const torch::Tensor& gamma,
     bool memory_efficient) {
 
-  TORCH_CHECK(num_groups >= 1 && num_groups <= 32);
+  TORCH_CHECK(num_groups >= 1);
   TORCH_CHECK(num_channels % num_groups == 0);
   TORCH_CHECK(x.dim() == 3);
 
@@ -602,7 +602,7 @@ torch::Tensor GroupRMSNormCUDABwd(
     int64_t num_channels, int64_t num_groups,
     const torch::Tensor& rstd, bool memory_efficient) {
 
-  TORCH_CHECK(num_groups >= 1 && num_groups <= 32);
+  TORCH_CHECK(num_groups >= 1);
   TORCH_CHECK(num_channels % num_groups == 0);
   TORCH_CHECK(x.dim() == 3);
 
