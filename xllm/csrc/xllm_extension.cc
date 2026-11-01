@@ -23,7 +23,6 @@ namespace xllm::ops { void DefineChunkSoftmaxOp(py::module&); }
 #include <transformer_engine/common/common.h>
 #include <transformer_engine/common/util/pybind_helper.h>
 
-
 namespace xllm {
 
 PYBIND11_MODULE(xllm_extension, m) {
