@@ -1,0 +1,407 @@
+{
+  "device": "NVIDIA B300 SXM6 AC",
+  "torch": "2.16.0.dev20261009+cu134",
+  "date": "2026-11-01",
+  "base": "692bc25",
+  "repetitions": 21,
+  "cold_l2_bytes": 536870912,
+  "native_event_overhead_ms": 0.002976000076159835,
+  "results": [
+    {
+      "case": "train-h32k8d64-fwd",
+      "claimed": {"baseline_ms": 0.294, "kernel_ms": 0.0554, "speedup": 5.31},
+      "native": {"case": "train-h32k8d64-fwd", "native_ms": 0.058368001133203506, "baseline_ms": 0.300927996635437, "speedup": 5.155701596645043},
+      "primitive": {"event_ms": 0.058368001133203506, "overhead_adjusted_ms": 0.055424001067876816, "gpu_span_ms": 0.0500480000000025},
+      "fp64_reference": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 67108864, "exact_elements": 67108156, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 8.723373816960408e-06},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16777021, "bit_exact": false, "max_abs_error": 0.0078125, "finite": true, "relative_l2_error": 8.7518431641206e-06}
+      ],
+      "repeatability": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 67108864, "exact_elements": 67108864, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16777216, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 67108864, "exact_elements": 67107698, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 9.993963189111115e-06},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16776882, "bit_exact": false, "max_abs_error": 0.0078125, "finite": true, "relative_l2_error": 9.980918137442851e-06}
+      ]
+    },
+    {
+      "case": "train-h32k8d64-bwd",
+      "claimed": {"baseline_ms": 0.2362, "kernel_ms": 0.0451, "speedup": 5.23},
+      "native": {"case": "train-h32k8d64-bwd", "native_ms": 0.048128001391887665, "baseline_ms": 0.2385919988155365, "speedup": 4.957446640527919},
+      "primitive": {"event_ms": 0.048128001391887665, "overhead_adjusted_ms": 0.045184001326560974, "gpu_span_ms": 0.040704000000001545},
+      "fp64_reference": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 67108864, "exact_elements": 67108205, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 8.53244236243677e-06}
+      ],
+      "repeatability": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 67108864, "exact_elements": 67108864, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 67108864, "exact_elements": 67107792, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 1.0583110809179366e-05}
+      ]
+    },
+    {
+      "case": "decode-h32k8d64-b1",
+      "claimed": {"baseline_ms": 0.0114, "kernel_ms": 0.0042, "speedup": 2.71},
+      "native": {"case": "decode-h32k8d64-b1", "native_ms": 0.0071680000983178616, "baseline_ms": 0.014336000196635723, "speedup": 2.0},
+      "primitive": {"event_ms": 0.0071680000983178616, "overhead_adjusted_ms": 0.004224000032991171, "gpu_span_ms": 0.0012800000000024738},
+      "fp64_reference": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 2048, "exact_elements": 2048, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 512, "exact_elements": 512, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "repeatability": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 2048, "exact_elements": 2048, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 512, "exact_elements": 512, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 2048, "exact_elements": 2048, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 512, "exact_elements": 512, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ]
+    },
+    {
+      "case": "decode-h32k8d64-b64",
+      "claimed": {"baseline_ms": 0.0134, "kernel_ms": 0.0042, "speedup": 3.2},
+      "native": {"case": "decode-h32k8d64-b64", "native_ms": 0.0071680000983178616, "baseline_ms": 0.016383999958634377, "speedup": 2.2857142485920536},
+      "primitive": {"event_ms": 0.0071680000983178616, "overhead_adjusted_ms": 0.004224000032991171, "gpu_span_ms": 0.0018879999999990105},
+      "fp64_reference": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 131072, "exact_elements": 131070, "bit_exact": false, "max_abs_error": 3.814697265625e-06, "finite": true, "relative_l2_error": 1.0610068595813559e-08},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 32768, "exact_elements": 32768, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "repeatability": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 131072, "exact_elements": 131072, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 32768, "exact_elements": 32768, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 131072, "exact_elements": 131069, "bit_exact": false, "max_abs_error": 3.814697265625e-06, "finite": true, "relative_l2_error": 1.0611343767814535e-08},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 32768, "exact_elements": 32768, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ]
+    },
+    {
+      "case": "train-h32k8d128-fwd",
+      "claimed": {"baseline_ms": 0.5781, "kernel_ms": 0.1045, "speedup": 5.53},
+      "native": {"case": "train-h32k8d128-fwd", "native_ms": 0.10649599879980087, "baseline_ms": 0.5836799740791321, "speedup": 5.4807690491393695},
+      "primitive": {"event_ms": 0.1074879989027977, "overhead_adjusted_ms": 0.10454399883747101, "gpu_span_ms": 0.10028900000000067},
+      "fp64_reference": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 134217728, "exact_elements": 134216333, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 8.043035943892129e-06},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33554041, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 9.12488773442174e-06}
+      ],
+      "repeatability": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 134217728, "exact_elements": 134217728, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33554432, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 134217728, "exact_elements": 134215362, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 1.01380060986396e-05},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33553823, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 1.1277573381972968e-05}
+      ]
+    },
+    {
+      "case": "train-h32k8d128-bwd",
+      "claimed": {"baseline_ms": 0.4631, "kernel_ms": 0.084, "speedup": 5.51},
+      "native": {"case": "train-h32k8d128-bwd", "native_ms": 0.0870399996638298, "baseline_ms": 0.46691200137138367, "speedup": 5.364338271768317},
+      "primitive": {"event_ms": 0.0870399996638298, "overhead_adjusted_ms": 0.08409599959850311, "gpu_span_ms": 0.08003199999999924},
+      "fp64_reference": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 134217728, "exact_elements": 134216341, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 9.319170368292987e-06}
+      ],
+      "repeatability": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 134217728, "exact_elements": 134217728, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 134217728, "exact_elements": 134215445, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 1.1244301697977418e-05}
+      ]
+    },
+    {
+      "case": "decode-h32k8d128-b1",
+      "claimed": {"baseline_ms": 0.0114, "kernel_ms": 0.0042, "speedup": 2.71},
+      "native": {"case": "decode-h32k8d128-b1", "native_ms": 0.0071680000983178616, "baseline_ms": 0.014336000196635723, "speedup": 2.0},
+      "primitive": {"event_ms": 0.0071680000983178616, "overhead_adjusted_ms": 0.004224000032991171, "gpu_span_ms": 0.0013760000000002037},
+      "fp64_reference": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4096, "exact_elements": 4096, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 1024, "exact_elements": 1024, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "repeatability": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4096, "exact_elements": 4096, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 1024, "exact_elements": 1024, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 4096, "exact_elements": 4096, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 1024, "exact_elements": 1024, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ]
+    },
+    {
+      "case": "decode-h32k8d128-b64",
+      "claimed": {"baseline_ms": 0.0134, "kernel_ms": 0.0042, "speedup": 3.2},
+      "native": {"case": "decode-h32k8d128-b64", "native_ms": 0.0071680000983178616, "baseline_ms": 0.016383999958634377, "speedup": 2.2857142485920536},
+      "primitive": {"event_ms": 0.0071680000983178616, "overhead_adjusted_ms": 0.004224000032991171, "gpu_span_ms": 0.0019530000000013389},
+      "fp64_reference": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 262144, "exact_elements": 262142, "bit_exact": false, "max_abs_error": 0.0009765625, "finite": true, "relative_l2_error": 1.9060369364448202e-06},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 65536, "exact_elements": 65536, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "repeatability": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 262144, "exact_elements": 262144, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 65536, "exact_elements": 65536, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 262144, "exact_elements": 262141, "bit_exact": false, "max_abs_error": 0.0009765625, "finite": true, "relative_l2_error": 1.9060414807717207e-06},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 65536, "exact_elements": 65536, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ]
+    },
+    {
+      "case": "train-h8k4d256r128-fwd",
+      "claimed": {"baseline_ms": 0.2572, "kernel_ms": 0.0349, "speedup": 7.37},
+      "native": {"case": "train-h8k4d256r128-fwd", "native_ms": 0.03788800165057182, "baseline_ms": 0.26419198513031006, "speedup": 6.972972276734547},
+      "primitive": {"event_ms": 0.03791999816894531, "overhead_adjusted_ms": 0.03497599810361862, "gpu_span_ms": 0.032032000000002885},
+      "fp64_reference": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33554105, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 8.027979810751173e-06},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16777035, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 1.0284147892059337e-05}
+      ],
+      "repeatability": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33554432, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16777216, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33553876, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 9.614424844375635e-06},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16776917, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 1.0512882990140447e-05}
+      ]
+    },
+    {
+      "case": "train-h8k4d256r128-bwd",
+      "claimed": {"baseline_ms": 0.1752, "kernel_ms": 0.0247, "speedup": 7.11},
+      "native": {"case": "train-h8k4d256r128-bwd", "native_ms": 0.027648000046610832, "baseline_ms": 0.17817600071430206, "speedup": 6.444444459415551},
+      "primitive": {"event_ms": 0.027648000046610832, "overhead_adjusted_ms": 0.02470399998128414, "gpu_span_ms": 0.02111999999999898},
+      "fp64_reference": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33554031, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 1.0149890450237217e-05}
+      ],
+      "repeatability": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33554432, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33553785, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 1.1668641163836068e-05}
+      ]
+    },
+    {
+      "case": "decode-h8k4d256r128-b1",
+      "claimed": {"baseline_ms": 0.0134, "kernel_ms": 0.0042, "speedup": 3.2},
+      "native": {"case": "decode-h8k4d256r128-b1", "native_ms": 0.0071680000983178616, "baseline_ms": 0.014336000196635723, "speedup": 2.0},
+      "primitive": {"event_ms": 0.0071680000983178616, "overhead_adjusted_ms": 0.004224000032991171, "gpu_span_ms": 0.0013119999999980792},
+      "fp64_reference": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 1024, "exact_elements": 1024, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 512, "exact_elements": 512, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "repeatability": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 1024, "exact_elements": 1024, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 512, "exact_elements": 512, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 1024, "exact_elements": 1024, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 512, "exact_elements": 512, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ]
+    },
+    {
+      "case": "decode-h8k4d256r128-b64",
+      "claimed": {"baseline_ms": 0.0155, "kernel_ms": 0.0042, "speedup": 3.69},
+      "native": {"case": "decode-h8k4d256r128-b64", "native_ms": 0.007199999876320362, "baseline_ms": 0.018432000651955605, "speedup": 2.5600001345243744},
+      "primitive": {"event_ms": 0.0071680000983178616, "overhead_adjusted_ms": 0.004224000032991171, "gpu_span_ms": 0.0018559999999997671},
+      "fp64_reference": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 65536, "exact_elements": 65536, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 32768, "exact_elements": 32768, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "repeatability": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 65536, "exact_elements": 65536, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 32768, "exact_elements": 32768, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 65536, "exact_elements": 65536, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 32768, "exact_elements": 32768, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ]
+    },
+    {
+      "case": "train-h4k4d256-fwd",
+      "claimed": {"baseline_ms": 0.2407, "kernel_ms": 0.0451, "speedup": 5.34},
+      "native": {"case": "train-h4k4d256-fwd", "native_ms": 0.048128001391887665, "baseline_ms": 0.2457599937915802, "speedup": 5.106382702045984},
+      "primitive": {"event_ms": 0.050144001841545105, "overhead_adjusted_ms": 0.047200001776218414, "gpu_span_ms": 0.04172800000000279},
+      "fp64_reference": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33554081, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 8.538073178144276e-06},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33554098, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 7.88291660112529e-06}
+      ],
+      "repeatability": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33554432, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33554432, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33553843, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 1.0547301209911874e-05},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33553832, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 1.1496105269988074e-05}
+      ]
+    },
+    {
+      "case": "train-h4k4d256-bwd",
+      "claimed": {"baseline_ms": 0.126, "kernel_ms": 0.0266, "speedup": 4.73},
+      "native": {"case": "train-h4k4d256-bwd", "native_ms": 0.027648000046610832, "baseline_ms": 0.12902399897575378, "speedup": 4.666666621753349},
+      "primitive": {"event_ms": 0.029664000496268272, "overhead_adjusted_ms": 0.02672000043094158, "gpu_span_ms": 0.022848000000001777},
+      "fp64_reference": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33554088, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 9.891978343426824e-06}
+      ],
+      "repeatability": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33554432, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33553819, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 1.1693373595737549e-05}
+      ]
+    },
+    {
+      "case": "decode-h4k4d256-b1",
+      "claimed": {"baseline_ms": 0.0114, "kernel_ms": 0.0042, "speedup": 2.71},
+      "native": {"case": "decode-h4k4d256-b1", "native_ms": 0.0071680000983178616, "baseline_ms": 0.014336000196635723, "speedup": 2.0},
+      "primitive": {"event_ms": 0.0071680000983178616, "overhead_adjusted_ms": 0.004224000032991171, "gpu_span_ms": 0.0013760000000002037},
+      "fp64_reference": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 1024, "exact_elements": 1024, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 1024, "exact_elements": 1024, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "repeatability": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 1024, "exact_elements": 1024, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 1024, "exact_elements": 1024, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 1024, "exact_elements": 1024, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 1024, "exact_elements": 1024, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ]
+    },
+    {
+      "case": "decode-h4k4d256-b64",
+      "claimed": {"baseline_ms": 0.0134, "kernel_ms": 0.0042, "speedup": 3.2},
+      "native": {"case": "decode-h4k4d256-b64", "native_ms": 0.0071680000983178616, "baseline_ms": 0.016383999958634377, "speedup": 2.2857142485920536},
+      "primitive": {"event_ms": 0.0071680000983178616, "overhead_adjusted_ms": 0.004224000032991171, "gpu_span_ms": 0.0016959999999999126},
+      "fp64_reference": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 65536, "exact_elements": 65535, "bit_exact": false, "max_abs_error": 3.0517578125e-05, "finite": true, "relative_l2_error": 1.1890892550204686e-07},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 65536, "exact_elements": 65536, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "repeatability": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 65536, "exact_elements": 65536, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 65536, "exact_elements": 65536, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 65536, "exact_elements": 65534, "bit_exact": false, "max_abs_error": 0.00390625, "finite": true, "relative_l2_error": 1.5220806287559588e-05},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 65536, "exact_elements": 65532, "bit_exact": false, "max_abs_error": 0.000244140625, "finite": true, "relative_l2_error": 1.0733831604970432e-06}
+      ]
+    },
+    {
+      "case": "prefill-h32k8d128-start8192",
+      "claimed": {"baseline_ms": 0.1465, "kernel_ms": 0.0308, "speedup": 4.75},
+      "native": {"case": "prefill-h32k8d128-start8192", "native_ms": 0.03379200026392937, "baseline_ms": 0.1586879938840866, "speedup": 4.696022509607847},
+      "primitive": {"event_ms": 0.03379200026392937, "overhead_adjusted_ms": 0.030848000198602676, "gpu_span_ms": 0.02835200000000259},
+      "fp64_reference": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33554042, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 9.234627284580934e-06},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8388608, "exact_elements": 8388509, "bit_exact": false, "max_abs_error": 0.0078125, "finite": true, "relative_l2_error": 5.786069249317984e-06}
+      ],
+      "repeatability": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33554432, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8388608, "exact_elements": 8388608, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33553753, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 1.1657215187523305e-05},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8388608, "exact_elements": 8388445, "bit_exact": false, "max_abs_error": 0.0078125, "finite": true, "relative_l2_error": 8.169904595756135e-06}
+      ]
+    },
+    {
+      "case": "prefill-h32k8d128",
+      "claimed": {"baseline_ms": 0.2899, "kernel_ms": 0.0554, "speedup": 5.24},
+      "native": {"case": "prefill-h32k8d128", "native_ms": 0.05833600088953972, "baseline_ms": 0.2987839877605438, "speedup": 5.1217770022716635},
+      "primitive": {"event_ms": 0.058368001133203506, "overhead_adjusted_ms": 0.055424001067876816, "gpu_span_ms": 0.05068900000000212},
+      "fp64_reference": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 67108864, "exact_elements": 67108160, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 7.795316825843397e-06},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16777047, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 9.152522373795356e-06}
+      ],
+      "repeatability": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 67108864, "exact_elements": 67108864, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16777216, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 67108864, "exact_elements": 67107638, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 9.55916563765244e-06},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16776932, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 1.0332830583368812e-05}
+      ]
+    },
+    {
+      "case": "prefill-h8k4d256r128",
+      "claimed": {"baseline_ms": 0.1281, "kernel_ms": 0.0205, "speedup": 6.24},
+      "native": {"case": "prefill-h8k4d256r128", "native_ms": 0.023520000278949738, "baseline_ms": 0.14131200313568115, "speedup": 6.008163327368434},
+      "primitive": {"event_ms": 0.023552000522613525, "overhead_adjusted_ms": 0.020608000457286835, "gpu_span_ms": 0.01792099999999846},
+      "fp64_reference": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16777085, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 7.96828638500794e-06},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8388608, "exact_elements": 8388511, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 1.2184832430323222e-05}
+      ],
+      "repeatability": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16777216, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8388608, "exact_elements": 8388608, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16776952, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 9.593831917514158e-06},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 8388608, "exact_elements": 8388427, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 1.4428794620111401e-05}
+      ]
+    },
+    {
+      "case": "prefill-h4k4d256",
+      "claimed": {"baseline_ms": 0.1213, "kernel_ms": 0.0267, "speedup": 4.54},
+      "native": {"case": "prefill-h4k4d256", "native_ms": 0.029664000496268272, "baseline_ms": 0.13308799266815186, "speedup": 4.486515319634461},
+      "primitive": {"event_ms": 0.02969600073993206, "overhead_adjusted_ms": 0.02675200067460537, "gpu_span_ms": 0.021408000000003084},
+      "fp64_reference": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16777019, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 1.0653660085064476e-05},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16777023, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 1.0366336736007768e-05}
+      ],
+      "repeatability": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16777216, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16777216, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16776905, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 1.3488683306995984e-05},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 16777216, "exact_elements": 16776898, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 1.2461885603299289e-05}
+      ]
+    },
+    {
+      "case": "unbind-q-h32k8d128-fwd",
+      "claimed": {"baseline_ms": 0.7796, "kernel_ms": 0.1045, "speedup": 7.46},
+      "native": {"case": "unbind-q-h32k8d128-fwd", "native_ms": 0.10851199924945831, "baseline_ms": 0.7853760123252869, "speedup": 7.237688161286066},
+      "primitive": {"event_ms": 0.1074879989027977, "overhead_adjusted_ms": 0.10454399883747101, "gpu_span_ms": 0.10166500000000088},
+      "fp64_reference": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 134217728, "exact_elements": 134216322, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 8.556822953095295e-06},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33554089, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 1.1079581247373568e-05}
+      ],
+      "repeatability": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 134217728, "exact_elements": 134217728, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33554432, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 134217728, "exact_elements": 134215394, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 1.0570822436544107e-05},
+        {"output": "out2", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 33554432, "exact_elements": 33553849, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 1.2373119476440604e-05}
+      ]
+    },
+    {
+      "case": "unbind-kq-h32k8d128-fwd",
+      "claimed": {"baseline_ms": 0.6619, "kernel_ms": 0.084, "speedup": 7.88},
+      "native": {"case": "unbind-kq-h32k8d128-fwd", "native_ms": 0.08787199854850769, "baseline_ms": 0.6655679941177368, "speedup": 7.574289934356341},
+      "primitive": {"event_ms": 0.0870399996638298, "overhead_adjusted_ms": 0.08409599959850311, "gpu_span_ms": 0.0803849999999984},
+      "fp64_reference": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 134217728, "exact_elements": 134216352, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 7.834614982875347e-06}
+      ],
+      "repeatability": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 134217728, "exact_elements": 134217728, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 134217728, "exact_elements": 134215433, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 9.555035199522141e-06}
+      ]
+    },
+    {
+      "case": "bhld-h32k8d128-bwd",
+      "claimed": {"baseline_ms": 0.6708, "kernel_ms": 0.0861, "speedup": 7.79},
+      "native": {"case": "bhld-h32k8d128-bwd", "native_ms": 0.08905600011348724, "baseline_ms": 0.447519987821579, "speedup": 5.02515256974587},
+      "primitive": {"event_ms": 0.08908800035715103, "overhead_adjusted_ms": 0.08614400029182434, "gpu_span_ms": 0.08112099999999918},
+      "fp64_reference": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 134217728, "exact_elements": 134216327, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 9.328438056505869e-06}
+      ],
+      "repeatability": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 134217728, "exact_elements": 134217728, "bit_exact": true, "max_abs_error": 0.0, "finite": true, "relative_l2_error": 0.0}
+      ],
+      "original_parity": [
+        {"output": "out1", "atol": 0.016, "rtol": 0.016, "required_match": 0.99999, "matched_fraction": 1.0, "passes_tolerance": true, "numel": 134217728, "exact_elements": 134215391, "bit_exact": false, "max_abs_error": 0.015625, "finite": true, "relative_l2_error": 1.0941636157002202e-05}
+      ]
+    }
+  ]
+}

@@ -5,6 +5,50 @@ import torch
 import torch.nn as nn
 
 
+class _RotaryFunction(torch.autograd.Function):
+    """Rotate q and k together, including the conjugate rotation in autograd."""
+
+    @staticmethod
+    def forward(ctx, x1, x2, freqs, conjugate):
+        from xllm_extension import ops
+        ctx.save_for_backward(freqs)
+        ctx.conjugate = conjugate
+        y1 = torch.empty_like(x1, memory_format=torch.contiguous_format)
+        y2 = torch.empty_like(x2, memory_format=torch.contiguous_format)
+        ops.rotary_embedding(conjugate, x1, x2, freqs, y1, y2)
+        return y1, y2
+
+    @staticmethod
+    def backward(ctx, dy1, dy2):
+        (freqs,) = ctx.saved_tensors
+        dx1, dx2 = _RotaryFunction.apply(dy1.contiguous(), dy2.contiguous(), freqs, not ctx.conjugate)
+        return dx1, dx2, None, None
+
+
+def _fused_rotary(x1, x2, freqs, backward):
+    """Return the fused results when the compiled kernel supports these inputs."""
+    tensors = (x1,) if x2 is None else (x1, x2)
+    if freqs.requires_grad or freqs.is_conj() or freqs.dtype != torch.complex64 or freqs.ndim != 2:
+        return None
+    if not all(x.is_cuda and x.ndim == 4 and x.dtype in (torch.float16, torch.bfloat16, torch.float32)
+               and x.stride(-1) == 1 and x.shape[-1] % 2 == 0 for x in tensors):
+        return None
+    if freqs.shape != (x1.size(1), x1.size(3) // 2):
+        return None
+    if x2 is not None and (x2.dtype != x1.dtype or x2.shape[:2] != x1.shape[:2] or x2.size(3) != x1.size(3)):
+        return None
+    if torch.cuda.get_device_capability(x1.device)[0] < 10:
+        return None
+    try:
+        from xllm_extension import ops
+    except ImportError:
+        return None
+    if not hasattr(ops, "rotary_embedding"):
+        return None
+    empty = x1.new_empty(0) if x2 is None else x2
+    return _RotaryFunction.apply(x1, empty, freqs, backward)
+
+
 class RotaryEmbedding(nn.Module):
     def __init__(self, embed_dim, max_positions, base):
         super().__init__()
@@ -65,6 +109,10 @@ def apply_rotary_embedding(
         - inputs: grad_x_out
         - outputs: grad_x
     """
+    fused = _fused_rotary(x, None, freqs_cis, backward)
+    if fused is not None:
+        return fused[0]
+
     if backward:
         freqs_cis = freqs_cis.conj()
 
@@ -90,6 +138,10 @@ def apply_rotary_embeddings(
         - inputs: (grad_xq_out, grad_xk_out)
         - outputs: (grad_xq, grad_xk)
     """
+    fused = _fused_rotary(xq, xk, freqs_cis, backward)
+    if fused is not None:
+        return fused
+
     if backward:
         freqs_cis = freqs_cis.conj()
 
