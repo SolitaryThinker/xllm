@@ -123,3 +123,8 @@ the original and 16.7 for the optimized build. No nonfinite losses, gradient nor
 observed. These are short continued-training checks, not evidence of long-run convergence. They exercise
 group RMS normalization and RoPE; they do not exercise group layer normalization, timestep decay
 normalization, or AWM softmax. Hardware coverage remains B300 (sm_103a).
+
+## Combined model training
+
+See [Gekko training comparison](gekko-training.md) for all four kernel families
+trained together with nonzero AWM gradients and same-binary repeat controls.
