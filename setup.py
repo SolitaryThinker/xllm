@@ -58,17 +58,22 @@ CSRCS = [
     os.path.join(PATH, "xllm/csrc/transformer_engine/common/common.cu")
 ]
 
-# Blackwell kernels use architecture-specific instructions; mixed or older targets keep the existing CUDA ops.
+# Architecture-specific kernels are enabled only when every CUDA target supports them.
 _archs = os.environ.get("TORCH_CUDA_ARCH_LIST", "").replace(";", " ").split()
-_build_blackwell = bool(_archs) and all(a.rstrip("a").split(".")[0].isdigit() and
-                                      int(a.rstrip("a").split(".")[0]) >= 10 for a in _archs)
+_build_blackwell = bool(_archs) and all(
+    arch.split(".")[0].isdigit() and int(arch.split(".")[0]) >= 10
+    for arch in _archs
+)
 if not _archs and torch.cuda.is_available():
-    _build_blackwell = all(torch.cuda.get_device_capability(i)[0] >= 10
-                           for i in range(torch.cuda.device_count()))
+    _build_blackwell = all(
+        torch.cuda.get_device_capability(i)[0] >= 10
+        for i in range(torch.cuda.device_count())
+    )
 if _build_blackwell:
     from glob import glob
-    CSRCS += sorted(glob(os.path.join(PATH, "xllm/csrc/ops/awm_softmax", "*.cu")))
-    CSRCS += sorted(glob(os.path.join(PATH, "xllm/csrc/ops/awm_softmax", "*.cpp")))
+
+    CSRCS += sorted(glob(os.path.join(PATH, "xllm/csrc/ops", "*", "*.cu")))
+    CSRCS += sorted(glob(os.path.join(PATH, "xllm/csrc/ops", "*", "*.cpp")))
 
 
 INCLUDE_DIRS = [

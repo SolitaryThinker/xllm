@@ -137,7 +137,8 @@ class AdaptiveWorkingMemory(nn.Module):
                 memory_mask = torch.ne(prev_segment_idx[:, -1], prev_segment_count)
                 memory = memory.masked_fill(memory_mask.view(bsz, 1, 1, 1), value=0.)
                 log_norm_term = log_norm_term.masked_fill(memory_mask.view(bsz, 1, 1), value=float("-inf"))
-            if chunk_softmax.available(prev_kk) and segment_idx is None:
+            if (chunk_softmax.available(prev_kk) and segment_idx is None
+                    and not (torch.is_grad_enabled() and prev_kk.requires_grad)):
                 prev_kk, curr_log_norm_term = chunk_softmax.decode(prev_kk)
             else:
                 prev_kk = F.softmax(prev_kk_fp32, dim=-1).to(kkey)

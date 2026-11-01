@@ -7,6 +7,11 @@ and the geometric mean.
     python tests/benchmark.py [--reps 50] [--cases substring ...]
 """
 
+if __package__ in (None, ""):
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
 import argparse
 import math
 import os
@@ -15,9 +20,8 @@ import sys
 
 import torch
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import build  # noqa: E402
-import cases  # noqa: E402
+from tests.kernels.awm_softmax import build
+from tests.kernels.awm_softmax import cases
 
 
 def time_case(ext, name, reps, warmup=10):

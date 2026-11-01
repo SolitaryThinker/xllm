@@ -1,4 +1,10 @@
 """Time the integrated public interfaces against their original implementations."""
+
+if __package__ in (None, ""):
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
 import argparse, importlib.util, json, math, os, statistics, sys
 from pathlib import Path
 import torch
@@ -8,8 +14,7 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--output', type=Path, default=Path('awm_softmax-latency.json'))
 options = parser.parse_args()
 os.environ.pop('XLLM_TEST_INSTALLED', None)
-sys.path[:0] = [str(root), str(root / 'tests/kernels' / family)]
-import cases, native_build
+from tests.kernels.awm_softmax import cases, native_build
 native = native_build.build()
 import xllm_extension
 ops = xllm_extension.ops

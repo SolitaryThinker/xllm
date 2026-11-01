@@ -1,6 +1,11 @@
 #include <torch/torch.h>
 
 #include "ops/attention.h"
+
+#ifdef XLLM_BLACKWELL
+namespace xllm::ops { void DefineChunkSoftmaxOp(py::module&); }
+#endif
+
 #include "ops/ema_hidden.h"
 #include "ops/ema_parameters.h"
 #include "ops/cema_blelloch_scan.h"
@@ -18,7 +23,6 @@
 #include <transformer_engine/common/common.h>
 #include <transformer_engine/common/util/pybind_helper.h>
 
-namespace xllm::ops { void DefineChunkSoftmaxOp(py::module&); }
 
 namespace xllm {
 
@@ -31,10 +35,10 @@ PYBIND11_MODULE(xllm_extension, m) {
         "Grouped GEMM");
   
   py::module m_ops = m.def_submodule("ops", "Submodule for custom ops.");
+  ops::DefineAttentionOp(m_ops);
 #ifdef XLLM_BLACKWELL
   ops::DefineChunkSoftmaxOp(m_ops);
 #endif
-  ops::DefineAttentionOp(m_ops);
   ops::DefineMultiSegAttentionOp(m_ops);
   ops::DefineEMAHiddenOp(m_ops);
   ops::DefineEMAParametersOp(m_ops);

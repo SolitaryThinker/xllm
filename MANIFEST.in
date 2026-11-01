@@ -1,0 +1,2 @@
+# Include CUDA sources and headers when building from a source distribution.
+recursive-include xllm/csrc *.h *.hpp *.cuh *.cu *.cc *.cpp

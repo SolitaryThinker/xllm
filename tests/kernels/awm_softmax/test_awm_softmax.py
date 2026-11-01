@@ -11,16 +11,20 @@ The extension is built from xllm/csrc on first use. The tests skip without a CUD
     python tests/test_awm_softmax.py            # without pytest; prints one line per case
 """
 
+if __package__ in (None, ""):
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
 import math
 import os
 import sys
 
 import torch
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import build  # noqa: E402
-import cases  # noqa: E402
-import reference  # noqa: E402
+from tests.kernels.awm_softmax import build
+from tests.kernels.awm_softmax import cases
+from tests.kernels.awm_softmax import reference
 
 _EXT = None
 

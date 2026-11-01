@@ -1,7 +1,12 @@
 """Build production CUDA sources for the kernel regression tests."""
 
+if __package__ in (None, ""):
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
 import torch
-import native_build
+from tests.kernels.awm_softmax import native_build
 
 
 def gpu_supported():

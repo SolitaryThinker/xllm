@@ -85,7 +85,7 @@ Detailed inputs and tolerances live in `tests/kernels/awm_softmax/cases.py`; the
 
 ## Validation
 
-The full native regression suite passes 136 tests. The complete `setup.py build_ext --inplace` build passes.
+The full native regression suite passes 148 tests. The complete `setup.py build_ext --inplace` build passes.
 The 18 native primitive integration cases pass compute-sanitizer memcheck with zero errors. The eight complete working-memory comparisons also pass. A separate sanitizer run through cuBLAS reported its initialization-time selective-recompilation API warning; it reported no invalid device-memory access.
 
 ## Combined model training
