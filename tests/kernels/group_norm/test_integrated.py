@@ -1,7 +1,13 @@
 """Check the native op signatures and all gradients against independent fp64 autograd."""
+
+if __package__ in (None, ""):
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
 import pytest
 import torch
-import native_build
+from tests.kernels.group_norm import native_build
 
 
 @pytest.fixture(scope="module")

@@ -10,16 +10,20 @@ case's tolerances. A call must also leave the outputs it does not produce as the
 The tests skip when no GPU of compute capability 10.0 or higher is available.
 """
 
+if __package__ in (None, ""):
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
 import sys
 from pathlib import Path
 
 import pytest
 import torch
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import cases  # noqa: E402
-import extension  # noqa: E402
-import reference  # noqa: E402
+from tests.kernels.group_norm import cases
+from tests.kernels.group_norm import extension
+from tests.kernels.group_norm import reference
 
 pytestmark = pytest.mark.skipif(not extension.cuda_available(), reason="needs a CUDA GPU of compute capability 10.0+")
 

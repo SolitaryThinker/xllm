@@ -7,6 +7,11 @@ Prints the median time of a call in milliseconds for each case of cases.shape_ca
 baseline the fast kernels are compared with.
 """
 
+if __package__ in (None, ""):
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
 import argparse
 import statistics
 import sys
@@ -14,9 +19,8 @@ from pathlib import Path
 
 import torch
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import cases  # noqa: E402
-import extension  # noqa: E402
+from tests.kernels.group_norm import cases
+from tests.kernels.group_norm import extension
 
 FLUSH_BYTES = 512 << 20  # four times the L2 cache of a B300
 
