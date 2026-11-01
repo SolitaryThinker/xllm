@@ -8,14 +8,19 @@ latency. The result of a case is the median over --reps calls.
     python tests/benchmark.py [--reps N] [--warmup N] [case-name ...]
 """
 
+if __package__ in (None, ""):
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
 import argparse
 import statistics
 import sys
 
 import torch
 
-import build
-import cases
+from tests.kernels.timestep_decay_norm import build
+from tests.kernels.timestep_decay_norm import cases
 
 
 def calibrate_spin():

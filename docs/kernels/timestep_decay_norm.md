@@ -101,7 +101,7 @@ Detailed inputs and tolerances live in `tests/kernels/timestep_decay_norm/cases.
 
 ## Validation
 
-The full native regression suite passes 142 tests. The complete `setup.py build_ext --inplace` build passes.
+The full native regression suite passes 148 tests. The complete `setup.py build_ext --inplace` build passes.
 The installed extension's integration cases pass compute-sanitizer memcheck with zero errors.
 
 ## Combined model training

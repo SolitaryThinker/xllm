@@ -55,6 +55,8 @@ void TimestepDecayNormRun(int64_t mode, int64_t num_groups, double beta1, double
     check(cummean, B * L * num_groups, at::kFloat);
     check(cumrstd, B * L * num_groups, at::kFloat);
   }
+  TORCH_CHECK(beta1 >= 0 && beta1 < 1 && beta2 >= 0 && beta2 < 1, "decay coefficients must be in [0, 1)");
+  TORCH_CHECK(eps > 0, "eps must be positive");
   const auto bos = optional(bos_mask);
   const auto pad = optional(padding_mask);
   if (mode == kInfer || mode == kTrain) {

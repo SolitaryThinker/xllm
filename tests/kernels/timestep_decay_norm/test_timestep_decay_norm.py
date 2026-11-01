@@ -12,13 +12,18 @@ and every output is compared with reference.run under the case's tolerances.
 The tests are skipped where there is no CUDA GPU of compute capability 10.0 or newer.
 """
 
+if __package__ in (None, ""):
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
 import sys
 
 import torch
 
-import build
-import cases
-import reference
+from tests.kernels.timestep_decay_norm import build
+from tests.kernels.timestep_decay_norm import cases
+from tests.kernels.timestep_decay_norm import reference
 
 try:
     import pytest

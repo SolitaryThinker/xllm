@@ -14,12 +14,17 @@ carried state, nonzero gradients of the final state, fp32, fp16 and bf16. Both a
 same inputs, in every run.
 """
 
+if __package__ in (None, ""):
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
 import math
 import random
 
 import torch
 
-import reference
+from tests.kernels.timestep_decay_norm import reference
 
 OUTPUTS = ["y", "count", "mean", "var", "cummean", "cumrstd", "dx", "dprev_mean", "dprev_var", "dgamma", "dbeta"]
 

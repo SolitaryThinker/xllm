@@ -1,8 +1,14 @@
 """Check native TDN layouts and gradients against the fp64 step-by-step recurrence."""
+
+if __package__ in (None, ""):
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
 import pytest
 import torch
-import reference
-import native_build
+from tests.kernels.timestep_decay_norm import reference
+from tests.kernels.timestep_decay_norm import native_build
 
 
 @pytest.fixture(scope="module")
@@ -104,3 +110,32 @@ def test_concurrent_streams_and_graph_replay(ext):
         ref = ext.ops.group_timestep_decay_norm_fwd(*args)
         for a, b in zip(captured, ref):
             torch.testing.assert_close(a, b, atol=0.04, rtol=0.02)
+
+
+@pytest.mark.parametrize("invalid", ["eps", "count_shape", "mean_shape", "gamma_shape", "mask_shape"])
+def test_invalid_forward_metadata(ext, invalid):
+    """Malformed inputs must raise before a native launch can read their storage."""
+    args = list(_persistent_inputs(length=7))
+    if invalid == "eps":
+        args[-1] = 0.0
+    elif invalid == "count_shape":
+        args[2] = args[2].reshape(2, 1)
+    elif invalid == "mean_shape":
+        args[3] = args[3].flatten()
+    elif invalid == "gamma_shape":
+        args[5] = args[5].reshape(1, -1)
+    else:
+        args[1] = torch.zeros(14, device="cuda", dtype=torch.bool)
+    with pytest.raises(RuntimeError):
+        ext.ops.group_timestep_decay_norm_cub_fwd(*args)
+
+
+def test_invalid_saved_statistics_layout(ext):
+    """CUB and chunkwise statistics contain the same values in different layouts."""
+    args = list(_persistent_inputs(length=7))
+    out = ext.ops.group_timestep_decay_norm_cub_fwd(*args)
+    with pytest.raises(RuntimeError, match="cummean"):
+        ext.ops.group_timestep_decay_norm_cub_bwd(
+            torch.ones_like(args[0]), torch.zeros_like(args[3]), torch.zeros_like(args[4]),
+            args[0], args[2], None, out[4].transpose(1, 2), out[5], args[5], None,
+            args[8], args[9], args[10])
